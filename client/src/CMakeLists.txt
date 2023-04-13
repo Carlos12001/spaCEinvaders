@@ -1,3 +1,5 @@
+cmake_minimum_required(VERSION 3.25)
+
 # Set C standard to C23
 set(CMAKE_C_STANDARD 23)
 
@@ -7,5 +9,43 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY  ${CMAKE_BINARY_DIR}/bin)
 # Create output directory if it doesn't exist
 file(MAKE_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 
+
+# Copy SDL2 and SDL2_image dll to output directory
+file(COPY ${CMAKE_SOURCE_DIR}/src/lib/SDL2/x86_64-w64-mingw32/bin/SDL2.dll
+        DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+file(COPY ${CMAKE_SOURCE_DIR}/src/lib/SDL2_image/x86_64-w64-mingw32/bin/SDL2_image.dll
+        DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+
+
+# Include SDL2 and SDL2_image headers
+find_path(SDL2_INCLUDE_DIR SDL.h HINTS
+        ${CMAKE_SOURCE_DIR}/src/lib/SDL2/x86_64-w64-mingw32/include/SDL2)
+find_path(SDL2_INCLUDE_DIR SDL.h HINTS
+        ${CMAKE_SOURCE_DIR}/src/lib/SDL2_image/x86_64-w64-mingw32/include/SDL2)
+
+include_directories(${SDL2_INCLUDE_DIR}
+                    ${SDL2_IMAGE_INCLUDE_DIR}
+        )
+
+# Link SDL2 library
+find_library(SDL2_LIB SDL2 HINTS
+        ${CMAKE_SOURCE_DIR}/src/lib/SDL2/x86_64-w64-mingw32/lib)
+if (NOT SDL2_LIB)
+    message(FATAL_ERROR "SDL2 library not found")
+endif()
+
+# Link SDL2_image library
+find_library(SDL2_IMAGE_LIB SDL2_image HINTS
+        ${CMAKE_SOURCE_DIR}/src/lib/SDL2_image/x86_64-w64-mingw32/lib)
+if (NOT SDL2_IMAGE_LIB)
+    message(FATAL_ERROR "SDL2_image library not found")
+endif()
+
 # Create executable
-add_executable(${PROJECT_NAME} main.c connection.c)
+add_executable(client main.c connection.c connection.h)
+
+# Link libraries
+target_link_libraries(client
+        ${SDL2_LIB}
+        ${SDL2_IMAGE_LIB}
+        )
