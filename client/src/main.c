@@ -1,59 +1,39 @@
 #include <stdio.h>
-#include "connection.h"
+#include "connections/csocket.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <synchapi.h>
 #include <SDL.h>
 #include <windows.h>
 
-#define WINDOW_WIDTH 640
-#define WINDOW_HEIGHT 480
+#define MAX_MSG_LEN 1024
+
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
                    LPSTR lpCmdLine, int nCmdShow){
     printf("Initalize the Client\n");
-    print_example_coneection();
 
-    // Initialize SDL
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-        printf("Failed to initialize SDL! SDL_Error: %s\n",
-               SDL_GetError());
-        return -1;
-    }
+    int sock_fd;
+    char buffer[MAX_MSG_LEN];
 
-    // Create window
-    SDL_Window* window = SDL_CreateWindow("Hello World", SDL_WINDOWPOS_UNDEFINED,
-                                          SDL_WINDOWPOS_UNDEFINED, WINDOW_WIDTH,
-                                          WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
-    if (!window) {
-        printf("Failed to create window! SDL_Error: %s\n", SDL_GetError());
-        return -1;
-    }
+    // Connect to server
+    sock_fd = init_socket("127.0.0.1", 25565);
+    printf("Connected to server\n");
 
-    // Get window surface
-    SDL_Surface* surface = SDL_GetWindowSurface(window);
-    if (!surface) {
-        printf("Failed to get the surface from the window! SDL_Error: %s\n",
-               SDL_GetError());
-        return -1;
-    }
 
-    // Fill surface with white color
-    SDL_Rect rect = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
-    Uint32 white = SDL_MapRGB(surface->format, 255, 255, 255);
-    SDL_FillRect(surface, &rect, white);
+    // Start listening for incoming messages
+    start_listening(sock_fd);
 
-    // Update window surface
-    SDL_UpdateWindowSurface(window);
-
-    // Wait for user exit
-    SDL_Event event;
-    while (SDL_WaitEvent(&event)) {
-        if (event.type == SDL_QUIT) {
+    // Send messages to server
+    while (1) {
+        printf("Enter message: ");
+        fgets(buffer, MAX_MSG_LEN, stdin);
+        if (send_message(sock_fd, buffer) < 0) {
+            printf("Failed to send message\n");
             break;
         }
     }
 
-    // Clean up
-    SDL_DestroyWindow(window);
-    SDL_Quit();
-
-    return 0;
+    return EXIT_SUCCESS;
 }

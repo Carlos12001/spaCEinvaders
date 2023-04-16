@@ -41,11 +41,16 @@ if (NOT SDL2_IMAGE_LIB)
     message(FATAL_ERROR "SDL2_image library not found")
 endif()
 
+include_directories(
+        ${PROJECT_SOURCE_DIR}/connections
+)
+
 # Create executable
-add_executable(client main.c connection.c connection.h)
+add_executable(${PROJECT_NAME} main.c connections/csocket.c)
 
 # Link libraries
-target_link_libraries(client
+target_link_libraries(${PROJECT_NAME}
         ${SDL2_LIB}
         ${SDL2_IMAGE_LIB}
+        ws2_32
         )

@@ -1,4 +1,4 @@
-package connection;
+package connections;
 
 public class Connection {
 

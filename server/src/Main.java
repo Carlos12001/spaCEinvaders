@@ -1,4 +1,4 @@
-import connection.Connection;
+import connections.*;
 import game.Game;
 
 public class Main {
@@ -6,5 +6,8 @@ public class Main {
         System.out.println("Hello and welcome to the Server!");
         Connection.start();
         Game.start();
+        Server server = new Server();
+        server.start(25565);
+
     }
 }
