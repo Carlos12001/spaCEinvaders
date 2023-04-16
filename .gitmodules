@@ -1,3 +1,0 @@
-[submodule "client/src/lib/cmake/sdl2"]
-	path = client/src/lib/cmake/sdl2
-	url = https://gitlab.com/aminosbh/sdl2-cmake-modules.git
