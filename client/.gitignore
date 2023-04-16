@@ -211,3 +211,4 @@ $RECYCLE.BIN/
 # End of https://www.toptal.com/developers/gitignore/api/windows,linux,clion+all,visualstudiocode,cmake,c
 
 !src/lib/**
+!src/lib/sdl2/**
