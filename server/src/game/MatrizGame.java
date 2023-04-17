@@ -38,25 +38,22 @@ public class MatrizGame {
         matriz[rowNum-1][colNum/2 -1] = 10;
 
         // create bunkers
-        matriz[rowNum-2][3] = 20;
-        matriz[rowNum-2][4] = 20;
-        matriz[rowNum-2][5] = 20;
-        matriz[rowNum-2][6] = 20;
+        int numBunkers = 4;
+        int bunkerWidth = 3;
+        int totalBunkerWidth = numBunkers * bunkerWidth;
+        int remainingSpace = colNum - totalBunkerWidth;
+        int spaceBetweenBunkers = remainingSpace / (numBunkers + 1);
+        int extraSpace = remainingSpace % (numBunkers + 1);
+        int startingColumn = spaceBetweenBunkers + extraSpace / 2;
 
-        matriz[rowNum-2][9] = 20;
-        matriz[rowNum-2][10] = 20;
-        matriz[rowNum-2][11] = 20;
-        matriz[rowNum-2][12] = 20;
-
-        matriz[rowNum-2][17] = 20;
-        matriz[rowNum-2][18] = 20;
-        matriz[rowNum-2][19] = 20;
-        matriz[rowNum-2][20] = 20;
-
-        matriz[rowNum-2][24] = 20;
-        matriz[rowNum-2][25] = 20;
-        matriz[rowNum-2][26] = 20;
-        matriz[rowNum-2][27] = 20;
+        for (int k = 0; k < numBunkers; k++) {
+            for (int i = rowNum - 2; i < rowNum - 1; i++) {
+                for (int j = startingColumn; j < startingColumn + bunkerWidth; j++) {
+                    matriz[i][j] = 20;
+                }
+            }
+            startingColumn += bunkerWidth + spaceBetweenBunkers;
+        }
         System.out.println("Matriz inicializada");
     }
 
@@ -124,8 +121,6 @@ public class MatrizGame {
             }
         }
 
-        System.out.println("moveDown:\t" + moveDown);
-
         Integer[][] temp = new Integer[rowNum][colNum];
         setMatrixZero(temp);
         if (moveDown) {
@@ -157,13 +152,19 @@ public class MatrizGame {
         matriz = temp;
     }
 
-    public void printMatriz() {
+    public String getMatrizString() {
+        StringBuilder result = new StringBuilder();
         for (Integer [] row: matriz) {
             for(Integer element: row){
-                System.out.print(element + "\t");
+                result.append(element).append("\t");
             }
-            System.out.println();
+            result.append("\n");
         }
+        return result.toString();
+    }
+
+    public void printMatriz() {
+        System.out.println(getMatrizString());
         System.out.println("------------------------------------------------");
     }
 
@@ -175,4 +176,22 @@ public class MatrizGame {
         return colNum;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        result.append("[");
+        for (Integer i = 0; i < rowNum; i++) {
+            if (i > 0)
+                result.append(",");
+            result.append("[");
+            for (Integer j = 0; j < colNum; j++) {
+                if (j > 0)
+                    result.append(",");
+                result.append(matriz[i][j]);
+            }
+            result.append("]");
+        }
+        result.append("]");
+        return result.toString();
+    }
 }

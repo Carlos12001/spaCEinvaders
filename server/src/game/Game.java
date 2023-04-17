@@ -14,7 +14,9 @@ public class Game {
 
     private Integer alienSpeed = 500;
 
-    private final Integer shotSpeed = 100;
+    private Integer alienShootTimerWait = 500;
+
+    private final Integer shotSpeed = 50;
 
     private Integer playerLives = 3;
 
@@ -50,14 +52,14 @@ public class Game {
 
     public void startGameLoop() {
         executor.scheduleAtFixedRate(() -> {
-            System.out.println("Iteration: "+ ++interationCounter);
+//            System.out.println("Iteration: "+ ++interationCounter);
             checkGameOver();
             if (gameOver) {
                 System.out.println("Game Over");
-                executor.shutdown(); // Detiene el ScheduledExecutorService si hay un "game over"
+                System.out.println(this.getStatus());
+                executor.shutdown();
             } else {
                 updateGame();
-                printMatriz();
             }
         }, 0, gameSpeed, TimeUnit.MILLISECONDS);
     }
@@ -72,6 +74,7 @@ public class Game {
         if (alienMoveTimer >= alienSpeed) {
             matrizGame.moveAliens();
             alienMoveTimer = 0;
+            printMatriz();
         }
 
         // shoot aliens
@@ -88,9 +91,22 @@ public class Game {
 
     }
 
-    public String getStatus(){
-        return "Lives: " + playerLives + " Score: " + playerScore;
+    @Override
+    public String toString() {
+        return "{"+
+                "\"gameOver\":" + gameOver +
+                ",\"playerLives\":" + playerLives +
+                ",\"playerScore\":" + playerScore +
+                ",\"matrizGame\":" + matrizGame.toString() +
+                "}";
     }
+    public String getStatus() {
+        return  gameOver ? String.valueOf(1) : String.valueOf(0) + "\n" +
+                playerLives + "\n" +
+                playerScore + "\n" +
+                matrizGame.getMatrizString();
+    }
+
 
 }
 
