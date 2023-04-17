@@ -1,5 +1,6 @@
 package game;
 
+
 public class MatrizGame {
 
     private final Integer rowNum = 15;
@@ -54,7 +55,6 @@ public class MatrizGame {
             }
             startingColumn += bunkerWidth + spaceBetweenBunkers;
         }
-        System.out.println("Matriz inicializada");
     }
 
     static public void setMatrixZero(Integer[][] matrix) {
@@ -102,6 +102,26 @@ public class MatrizGame {
     }
 
     public void movePlayer(Integer direction){
+        int playerRow = rowNum - 1;
+        int playerCol = -1;
+
+        // Find the current position of the player
+        for (int col = 0; col < colNum; col++) {
+            if (matriz[playerRow][col] == 10) {
+                playerCol = col;
+                break;
+            }
+        }
+
+        // Determine the new position of the player based on the direction
+        int newPlayerCol = playerCol + direction;
+
+        // Check if the new position is within the boundaries of the matrix
+        if (newPlayerCol >= 0 && newPlayerCol < colNum) {
+            // Move the player to the new position
+            matriz[playerRow][playerCol] = 0;
+            matriz[playerRow][newPlayerCol] = 10;
+        }
     }
 
     public void createPlayerShoot(){
@@ -154,17 +174,27 @@ public class MatrizGame {
 
     public String getMatrizString() {
         StringBuilder result = new StringBuilder();
-        for (Integer [] row: matriz) {
-            for(Integer element: row){
-                result.append(element).append("\t");
+        for (Integer i = 0; i < rowNum; i++) {
+            for (Integer j = 0; j < colNum; j++) {
+                result.append(matriz[i][j]);
+                if (i != rowNum-1)
+                    result.append(",");
+                else if (j != colNum-1)
+                    result.append(",");
             }
-            result.append("\n");
         }
         return result.toString();
     }
 
     public void printMatriz() {
-        System.out.println(getMatrizString());
+        StringBuilder result = new StringBuilder();
+        for (Integer i = 0; i < rowNum; i++) {
+            for (Integer j = 0; j < colNum; j++) {
+                result.append(matriz[i][j]).append("\t");
+            }
+            result.append("\n");
+        }
+        System.out.print(result);
         System.out.println("------------------------------------------------");
     }
 
@@ -193,5 +223,9 @@ public class MatrizGame {
         }
         result.append("]");
         return result.toString();
+    }
+
+    public Integer[][] getMatriz() {
+        return matriz;
     }
 }

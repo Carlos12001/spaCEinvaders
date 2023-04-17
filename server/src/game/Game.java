@@ -20,7 +20,7 @@ public class Game {
 
     private Integer playerLives = 3;
 
-    private Integer playerScore = 0;
+    private Integer playerScore = 1000;
 
     private Boolean gameOver = false;
 
@@ -47,7 +47,7 @@ public class Game {
     }
 
     public void checkGameOver(){
-        this.gameOver = (playerLives <= 0) || matrizGame.aliensArrived() ;
+        this.gameOver = (playerLives <= 3) || matrizGame.aliensArrived() ;
     }
 
     public void startGameLoop() {
@@ -55,8 +55,9 @@ public class Game {
 //            System.out.println("Iteration: "+ ++interationCounter);
             checkGameOver();
             if (gameOver) {
-                System.out.println("Game Over");
-                System.out.println(this.getStatus());
+//                System.out.println("Game Over");
+                String s = getStatus();
+                System.out.print(s);
                 executor.shutdown();
             } else {
                 updateGame();
@@ -74,7 +75,7 @@ public class Game {
         if (alienMoveTimer >= alienSpeed) {
             matrizGame.moveAliens();
             alienMoveTimer = 0;
-            printMatriz();
+//            printMatriz();
         }
 
         // shoot aliens
@@ -101,15 +102,18 @@ public class Game {
                 "}";
     }
     public String getStatus() {
-        return  gameOver ? String.valueOf(1) : String.valueOf(0) + "\n" +
-                playerLives + "\n" +
-                playerScore + "\n" +
-                matrizGame.getMatrizString();
+        StringBuilder result = new StringBuilder();
+        result.append((gameOver ? String.valueOf(1) : String.valueOf(0)));
+        result.append(",");
+        result.append(playerLives);
+        result.append(",");
+        result.append(playerScore);
+        result.append(",");
+        result.append(matrizGame.getMatrizString());
+        return   result.toString();
     }
 
-
 }
-
 
 /*
  existen cosas que son asincronicas y que el game
@@ -184,4 +188,3 @@ public class Game {
     r -> derecha
     s -> disparar
  */
-
