@@ -18,8 +18,13 @@ public class MatrizGame {
     }
 
     public MatrizGame(int colNumAliens){
-        this.colNumAliens = 1 < colNumAliens && colNumAliens < 10
-                ? colNumAliens : 5;
+
+        if ( 1 < colNumAliens && colNumAliens < 10)
+            this.colNumAliens = colNumAliens;
+        else{
+            System.out.println("Numero de aliens invalido");
+            System.out.println("Numero de aliens por defecto: 5");
+        }
         this.matriz = new int[rowNum][colNum];
         initializeGameMatriz();
     }
@@ -38,6 +43,10 @@ public class MatrizGame {
         matriz[rowNum-1][colNum/2 -1] = 10;
         System.out.println("Matriz inicializada");
     }
+
+//    public void addAlien(int row, int type){
+//
+//    }
 
     public void updateAliensPosition() {
         boolean moveDown = false;
@@ -67,6 +76,7 @@ public class MatrizGame {
                     if(0 < matriz[i][j] && matriz[i][j] < 4) {
                         temp[i][j + moveDirection] = matriz[i][j];
                     }
+                    else{}
                 }
             }
         }

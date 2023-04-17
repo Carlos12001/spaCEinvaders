@@ -7,23 +7,19 @@ public class Game {
 
     private MatrizGame matrizGame;
 
-    private Timer timer;
+    private final int gameSpeed = 50;
 
     private final int alienSpeed = 500;
 
-    private final int speedShot = 100;
+    private final int shotSpeed = 100;
 
     public Game() {
         matrizGame = new MatrizGame();
         printMatriz();
-//        timer = new Timer();
-//        startGameLoop();
     }
 
     public Game(int colNumAliens) {
         matrizGame = new MatrizGame(colNumAliens);
-//        timer = new Timer();
-//        startGameLoop();
     }
 
     public void printMatriz(){
@@ -31,17 +27,7 @@ public class Game {
     }
 
     private void startGameLoop() {
-        TimerTask task = new TimerTask() {
-            @Override
-            public void run() {
-                matrizGame.updateAliensPosition();
-                /* Aquí puedes agregar otros métodos para
-                 actualizar el estado del juego
-                 */
-            }
-        };
 
-        timer.schedule(task, 0, alienSpeed);
     }
 
     public void testMoveAliens(){
