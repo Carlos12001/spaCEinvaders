@@ -33,7 +33,30 @@ public class MatrizGame {
                     matriz[i][j] = 3;
             }
         }
+
+        // create the player
         matriz[rowNum-1][colNum/2 -1] = 10;
+
+        // create bunkers
+        matriz[rowNum-2][3] = 20;
+        matriz[rowNum-2][4] = 20;
+        matriz[rowNum-2][5] = 20;
+        matriz[rowNum-2][6] = 20;
+
+        matriz[rowNum-2][9] = 20;
+        matriz[rowNum-2][10] = 20;
+        matriz[rowNum-2][11] = 20;
+        matriz[rowNum-2][12] = 20;
+
+        matriz[rowNum-2][17] = 20;
+        matriz[rowNum-2][18] = 20;
+        matriz[rowNum-2][19] = 20;
+        matriz[rowNum-2][20] = 20;
+
+        matriz[rowNum-2][24] = 20;
+        matriz[rowNum-2][25] = 20;
+        matriz[rowNum-2][26] = 20;
+        matriz[rowNum-2][27] = 20;
         System.out.println("Matriz inicializada");
     }
 
@@ -46,6 +69,11 @@ public class MatrizGame {
     }
 
     public Boolean aliensArrived(){
+        for (int j = 0; j < rowNum; j++) {
+            if(0 < matriz[rowNum-1][j] && matriz[rowNum-1][j] < 4)
+                return true;
+        }
+
         return false;
     }
 
@@ -69,6 +97,9 @@ public class MatrizGame {
         return false;
     }
 
+    public void bunkerWillHit(){
+    }
+
     public Boolean alienWillDie(){
         return false;
     }
@@ -76,7 +107,10 @@ public class MatrizGame {
     public void movePlayer(Integer direction){
     }
 
-    public void createShoot(){
+    public void createPlayerShoot(){
+    }
+
+    public void createAliensShoot(){
     }
 
     public void moveAliens() {

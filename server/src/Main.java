@@ -5,6 +5,7 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Hello and welcome to the Server!");
         Game game = new Game();
+        game.startGameLoop();
 
         //
 //        Server server = new Server();

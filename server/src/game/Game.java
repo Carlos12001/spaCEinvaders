@@ -8,11 +8,11 @@ public class Game {
 
     private MatrizGame matrizGame;
 
-    private final Integer gameSpeed = 500;
+    private final Integer gameSpeed = 50;
 
     private final Integer ufoSpeed = 200;
 
-    private Integer alienSpeed = 1000;
+    private Integer alienSpeed = 500;
 
     private final Integer shotSpeed = 100;
 
@@ -45,7 +45,7 @@ public class Game {
     }
 
     public void checkGameOver(){
-        this.gameOver = (playerLives-- <= 0);
+        this.gameOver = (playerLives <= 0) || matrizGame.aliensArrived() ;
     }
 
     public void startGameLoop() {
@@ -64,6 +64,7 @@ public class Game {
 
     private void updateGame() {
         // do alien will die
+        // do bunkers will hit
         // do player will hit
         // move shots
         // move aliens
@@ -72,6 +73,8 @@ public class Game {
             matrizGame.moveAliens();
             alienMoveTimer = 0;
         }
+
+        // shoot aliens
 
         // move UFO
 
