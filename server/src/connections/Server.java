@@ -93,7 +93,7 @@ public class Server {
             try {
                 out = new PrintWriter(clientSocket.getOutputStream(), true);
                 in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-                out.println(clients.size());
+                out.println(clients.size()-1);
 
                 String inputLine;
                 while ((inputLine = in.readLine()) != null) {
