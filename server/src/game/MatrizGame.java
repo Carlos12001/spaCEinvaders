@@ -50,8 +50,6 @@ public class MatrizGame {
             }
         }
 
-        System.out.println("Move down: " + moveDown);
-
         int[][] temp = new int[rowNum][colNum];
 
         if (moveDown) {
