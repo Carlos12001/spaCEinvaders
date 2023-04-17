@@ -18,11 +18,11 @@ public class MatrizGame {
 
     public MatrizGame(){
         this.matriz = new Integer[rowNum][colNum];
-        setMatrixZero(matriz);
         initializeGameMatriz();
     }
 
     public void initializeGameMatriz(){
+        setMatrixZero(matriz);
         for (Integer i = 1; i <  7; i++) {
             for (Integer j = colNum-1; j > colNum-1-colNumAliens; j--) {
                 if (i <= 1)
@@ -79,7 +79,7 @@ public class MatrizGame {
     public void createShoot(){
     }
 
-    public void updateAliensPosition() {
+    public void moveAliens() {
         Boolean moveDown = false;
         Integer colToCheck = moveDirectionAliens == -1 ? 0 : colNum-1;
         for (Integer i = 0; i < rowNum; i++) {
@@ -90,15 +90,20 @@ public class MatrizGame {
             }
         }
 
+        System.out.println("moveDown:\t" + moveDown);
+
         Integer[][] temp = new Integer[rowNum][colNum];
         setMatrixZero(temp);
-
         if (moveDown) {
             for (Integer i = 0; i < rowNum; i++) {
                 for (Integer j = 0; j < colNum; j++) {
                     if(0 < matriz[i][j] && matriz[i][j] < 4){
                         temp[i+1][j] = matriz[i][j];
+                        continue;
                     }
+                    if(matriz[i][j] != 0)
+                        temp[i][j] = temp[i][j] == 0 ?
+                                matriz[i][j] : temp[i][j];
                 }
             }
 
@@ -107,10 +112,11 @@ public class MatrizGame {
                 for (Integer j = 0; j < colNum; j++) {
                     if(0 < matriz[i][j] && matriz[i][j] < 4) {
                         temp[i][j + moveDirectionAliens] = matriz[i][j];
+                        continue;
                     }
-                    else {
-                        temp[i][j] = matriz[i][j];
-                    }
+                    if(matriz[i][j] != 0)
+                        temp[i][j] = temp[i][j] == 0 ?
+                                matriz[i][j] : temp[i][j];
                 }
             }
         }

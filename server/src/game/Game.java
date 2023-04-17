@@ -38,7 +38,6 @@ public class Game {
     public Game() {
         matrizGame = new MatrizGame();
         executor = Executors.newSingleThreadScheduledExecutor();
-        startGameLoop();
     }
 
     public void printMatriz(){
@@ -49,9 +48,10 @@ public class Game {
         this.gameOver = (playerLives-- <= 0);
     }
 
-    private void startGameLoop() {
+    public void startGameLoop() {
         executor.scheduleAtFixedRate(() -> {
             System.out.println("Iteration: "+ ++interationCounter);
+            checkGameOver();
             if (gameOver) {
                 System.out.println("Game Over");
                 executor.shutdown(); // Detiene el ScheduledExecutorService si hay un "game over"
@@ -69,7 +69,7 @@ public class Game {
         // move aliens
         alienMoveTimer += gameSpeed;
         if (alienMoveTimer >= alienSpeed) {
-            matrizGame.updateAliensPosition();
+            matrizGame.moveAliens();
             alienMoveTimer = 0;
         }
 
@@ -83,14 +83,6 @@ public class Game {
 
         // create UFO
 
-        checkGameOver();
-    }
-
-    public void testMoveAliens(){
-        for (Integer i = 0; i < 45; i++) {
-            matrizGame.updateAliensPosition();
-            printMatriz();
-        }
     }
 
     public String getStatus(){
