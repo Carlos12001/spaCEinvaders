@@ -7,22 +7,14 @@ public class Main {
         System.out.println("Hello and welcome to the Server!");
         Game game = new Game();
         game.startGameLoop();
+        Scanner scanner = new Scanner(System.in);
+        String input = "";
+        while (!input.equals("salir")) {
+            input = scanner.nextLine();
+            game.setAction(input);
+        }
+        scanner.close();
 
-//        Scanner scanner = new Scanner(System.in);
-//        String input = "";
-//
-//        while (!input.equals("salir")) {
-//
-//            input = scanner.nextLine();
-//
-//            if (input.equals("saludar")) {
-//                System.out.println("Hola Mundo!");
-//            }
-//        }
-//
-//        scanner.close();
-//        System.out.println("Programa terminado.");
-//
 //        Server server = new Server();
 //        server.start(25565);
     }

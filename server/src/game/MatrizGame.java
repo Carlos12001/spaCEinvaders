@@ -39,17 +39,17 @@ public class MatrizGame {
         matriz[rowNum-1][colNum/2 -1] = 10;
 
         // create bunkers
-        int numBunkers = 4;
-        int bunkerWidth = 3;
-        int totalBunkerWidth = numBunkers * bunkerWidth;
-        int remainingSpace = colNum - totalBunkerWidth;
-        int spaceBetweenBunkers = remainingSpace / (numBunkers + 1);
-        int extraSpace = remainingSpace % (numBunkers + 1);
-        int startingColumn = spaceBetweenBunkers + extraSpace / 2;
+        Integer numBunkers = 4;
+        Integer bunkerWidth = 3;
+        Integer totalBunkerWidth = numBunkers * bunkerWidth;
+        Integer remainingSpace = colNum - totalBunkerWidth;
+        Integer spaceBetweenBunkers = remainingSpace / (numBunkers + 1);
+        Integer extraSpace = remainingSpace % (numBunkers + 1);
+        Integer startingColumn = spaceBetweenBunkers + extraSpace / 2;
 
-        for (int k = 0; k < numBunkers; k++) {
-            for (int i = rowNum - 2; i < rowNum - 1; i++) {
-                for (int j = startingColumn; j < startingColumn + bunkerWidth; j++) {
+        for (Integer k = 0; k < numBunkers; k++) {
+            for (Integer i = rowNum - 2; i < rowNum - 1; i++) {
+                for (Integer j = startingColumn; j < startingColumn + bunkerWidth; j++) {
                     matriz[i][j] = 20;
                 }
             }
@@ -66,7 +66,7 @@ public class MatrizGame {
     }
 
     public Boolean aliensArrived(){
-        for (int j = 0; j < rowNum; j++) {
+        for (Integer j = 0; j < rowNum; j++) {
             if(0 < matriz[rowNum-1][j] && matriz[rowNum-1][j] < 4)
                 return true;
         }
@@ -75,10 +75,17 @@ public class MatrizGame {
     }
 
     public Boolean aliensDied(){
-        return false;
+        for (Integer i = 0; i < rowNum; i++) {
+            for (Integer j = 0; j < colNum; j++) {
+                if(0 < matriz[i][j] && matriz[i][j] < 4){
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
-    public void createUFO(){
+    public void createUFO(Integer row){
 
     }
 
@@ -102,11 +109,12 @@ public class MatrizGame {
     }
 
     public void movePlayer(Integer direction){
-        int playerRow = rowNum - 1;
-        int playerCol = -1;
+
+        Integer playerRow = rowNum - 1;
+        Integer playerCol = -1;
 
         // Find the current position of the player
-        for (int col = 0; col < colNum; col++) {
+        for (Integer col = 0; col < colNum; col++) {
             if (matriz[playerRow][col] == 10) {
                 playerCol = col;
                 break;
@@ -114,7 +122,7 @@ public class MatrizGame {
         }
 
         // Determine the new position of the player based on the direction
-        int newPlayerCol = playerCol + direction;
+        Integer newPlayerCol = playerCol + direction;
 
         // Check if the new position is within the boundaries of the matrix
         if (newPlayerCol >= 0 && newPlayerCol < colNum) {
@@ -124,10 +132,10 @@ public class MatrizGame {
         }
     }
 
-    public void createPlayerShoot(){
+    public void shootPlayer(){
     }
 
-    public void createAliensShoot(){
+    public void shotAliens(){
     }
 
     public void moveAliens() {
@@ -169,6 +177,23 @@ public class MatrizGame {
                 }
             }
         }
+        matriz = temp;
+    }
+    
+    public void killAllAliens(){
+        Integer[][] temp = new Integer[rowNum][colNum];
+        setMatrixZero(temp);
+        for (Integer i = 0; i < rowNum; i++) {
+                for (Integer j = 0; j < colNum; j++) {
+                    if(0 < matriz[i][j] && matriz[i][j] < 4){
+                        temp[i][j] = 0;
+                        continue;
+                    }
+                    if(matriz[i][j] != 0)
+                        temp[i][j] = temp[i][j] == 0 ?
+                                matriz[i][j] : temp[i][j];
+                }
+            }
         matriz = temp;
     }
 

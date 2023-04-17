@@ -47,38 +47,50 @@ class MatrizGameTest {
 
     @Test
     void alienWillDie() {
+
+        matrizGame.printMatriz();
+        for (Integer i = 0; i < 53; i++) {
+            matrizGame.moveAliens();
+            matrizGame.printMatriz();
+        }
+        System.out.println("Kill All Aliens");
+        matrizGame.killAllAliens();
+        matrizGame.printMatriz();
+        assertEquals(true, matrizGame.aliensDied());
+        matrizGame.initializeGameMatriz();
+        matrizGame.printMatriz();
     }
 
     @Test
     void movePlayer() {
         // Move player to the left edge
-        for (int i = 0; i < 50; i++) {
+        for (Integer i = 0; i < 50; i++) {
             matrizGame.movePlayer(-1);
         }
         matrizGame.printMatriz();
 
         // Check if player is at the left edge
-        assertEquals(10, (int) matrizGame.getMatriz()[matrizGame.getRowNum() - 1][0]);
+        assertEquals(10, (Integer) matrizGame.getMatriz()[matrizGame.getRowNum() - 1][0]);
 
         // Move player to the right edge
-        for (int i = 0; i < 50; i++) {
+        for (Integer i = 0; i < 50; i++) {
             matrizGame.movePlayer(1);
         }
         matrizGame.printMatriz();
 
 
         // Check if player is at the right edge
-        assertEquals(10, (int) matrizGame.getMatriz()[matrizGame.getRowNum() - 1][matrizGame.getColNum() - 1]);
+        assertEquals(10, (Integer) matrizGame.getMatriz()[matrizGame.getRowNum() - 1][matrizGame.getColNum() - 1]);
 
         // Move player back to the center
-        for (int i = 0; i < matrizGame.getColNum() / 2; i++) {
+        for (Integer i = 0; i < matrizGame.getColNum() / 2; i++) {
             matrizGame.movePlayer(-1);
         }
         matrizGame.printMatriz();
 
 
         // Check if player is at the center
-        assertEquals(10, (int) matrizGame.getMatriz()[matrizGame.getRowNum() - 1][matrizGame.getColNum() / 2 - 1]);
+        assertEquals(10, (Integer) matrizGame.getMatriz()[matrizGame.getRowNum() - 1][matrizGame.getColNum() / 2 - 1]);
     }
     @Test
     void createShoot() {
