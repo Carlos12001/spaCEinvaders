@@ -2,36 +2,29 @@ package game;
 
 public class MatrizGame {
 
-    private final int rowNum = 15;
+    private final Integer rowNum = 15;
 
-    private final int colNum = 30;
+    private final Integer colNum = 30;
 
-    private int colNumAliens = 5;
+    private Integer[][] matriz;
 
-    public int[][] matriz;
+    private Integer colNumAliens = 5;
 
-    public int moveDirection = -1;
+    private Integer moveDirectionAliens = -1;
+
+    public Boolean isUFOPresent = false;
+
+    private Integer moveDirectionUFO = -1;
 
     public MatrizGame(){
-        this.matriz = new int[rowNum][colNum];
-        initializeGameMatriz();
-    }
-
-    public MatrizGame(int colNumAliens){
-
-        if ( 1 < colNumAliens && colNumAliens < 10)
-            this.colNumAliens = colNumAliens;
-        else{
-            System.out.println("Numero de aliens invalido");
-            System.out.println("Numero de aliens por defecto: 5");
-        }
-        this.matriz = new int[rowNum][colNum];
+        this.matriz = new Integer[rowNum][colNum];
+        setMatrixZero(matriz);
         initializeGameMatriz();
     }
 
     public void initializeGameMatriz(){
-        for (int i = 0; i <  6; i++) {
-            for (int j = colNum-1; j > colNum-1-colNumAliens; j--) {
+        for (Integer i = 1; i <  7; i++) {
+            for (Integer j = colNum-1; j > colNum-1-colNumAliens; j--) {
                 if (i <= 1)
                     matriz[i][j] = 1;
                 else if (i <= 3)
@@ -44,26 +37,65 @@ public class MatrizGame {
         System.out.println("Matriz inicializada");
     }
 
-//    public void addAlien(int row, int type){
-//
-//    }
+    static public void setMatrixZero(Integer[][] matrix) {
+        for (Integer i = 0; i < matrix.length; i++) {
+            for (Integer j = 0; j < matrix[i].length; j++) {
+                matrix[i][j] = 0;
+            }
+        }
+    }
+
+    public Boolean aliensArrived(){
+        return false;
+    }
+
+    public Boolean aliensDied(){
+        return false;
+    }
+
+    public void createUFO(){
+
+    }
+
+    public void moveUFO(){
+
+    }
+
+    public void moveShoots(){
+
+    }
+
+    public Boolean playerWillHit(){
+        return false;
+    }
+
+    public Boolean alienWillDie(){
+        return false;
+    }
+
+    public void movePlayer(Integer direction){
+    }
+
+    public void createShoot(){
+    }
 
     public void updateAliensPosition() {
-        boolean moveDown = false;
-        int colToCheck = moveDirection == -1 ? 0 : colNum-1;
-        for (int i = 0; i < rowNum; i++) {
+        Boolean moveDown = false;
+        Integer colToCheck = moveDirectionAliens == -1 ? 0 : colNum-1;
+        for (Integer i = 0; i < rowNum; i++) {
             if(0 < matriz[i][colToCheck] && matriz[i][colToCheck] < 4 ){
                 moveDown = true;
-                moveDirection *= -1;
+                moveDirectionAliens *= -1;
                 break;
             }
         }
 
-        int[][] temp = new int[rowNum][colNum];
+        Integer[][] temp = new Integer[rowNum][colNum];
+        setMatrixZero(temp);
 
         if (moveDown) {
-            for (int i = 0; i < rowNum; i++) {
-                for (int j = 0; j < colNum; j++) {
+            for (Integer i = 0; i < rowNum; i++) {
+                for (Integer j = 0; j < colNum; j++) {
                     if(0 < matriz[i][j] && matriz[i][j] < 4){
                         temp[i+1][j] = matriz[i][j];
                     }
@@ -71,12 +103,14 @@ public class MatrizGame {
             }
 
         } else {
-            for (int i = 0; i < rowNum; i++) {
-                for (int j = 0; j < colNum; j++) {
+            for (Integer i = 0; i < rowNum; i++) {
+                for (Integer j = 0; j < colNum; j++) {
                     if(0 < matriz[i][j] && matriz[i][j] < 4) {
-                        temp[i][j + moveDirection] = matriz[i][j];
+                        temp[i][j + moveDirectionAliens] = matriz[i][j];
                     }
-                    else{}
+                    else {
+                        temp[i][j] = matriz[i][j];
+                    }
                 }
             }
         }
@@ -84,8 +118,8 @@ public class MatrizGame {
     }
 
     public void printMatriz() {
-        for (int [] row: matriz) {
-            for(int element: row){
+        for (Integer [] row: matriz) {
+            for(Integer element: row){
                 System.out.print(element + "\t");
             }
             System.out.println();
@@ -93,11 +127,11 @@ public class MatrizGame {
         System.out.println("------------------------------------------------");
     }
 
-    public int getRowNum() {
+    public Integer getRowNum() {
         return rowNum;
     }
 
-    public int getColNum() {
+    public Integer getColNum() {
         return colNum;
     }
 
