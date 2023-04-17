@@ -12,10 +12,10 @@
 #include "csocket.h"
 
 #define MAX_MSG_LEN 1024
-
+int sock_fd;
 // Helper function to create a socket and connect to the server
 int create_socket(const char *server_ip, int port) {
-    int sock_fd;
+    //int sock_fd;
     struct sockaddr_in server_addr;
     WSADATA wsa_data;
 
@@ -41,7 +41,6 @@ int create_socket(const char *server_ip, int port) {
         exit(EXIT_FAILURE);
     }
 
-    Sleep(100);
     // Connect to server
     if (connect(sock_fd, (struct sockaddr *)&server_addr, sizeof(server_addr)) < 0) {
         printf("Connection failed\n");
@@ -53,7 +52,7 @@ int create_socket(const char *server_ip, int port) {
 
 // Thread function to listen for incoming messages
 void *listen_thread(void *arg) {
-    int sock_fd = *(int *)arg;
+    //int sock_fd = *(int *)arg;
     char buffer[MAX_MSG_LEN];
     int bytes_received;
 

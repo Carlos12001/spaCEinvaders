@@ -12,8 +12,9 @@
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
                    LPSTR lpCmdLine, int nCmdShow){
-    printf("Initalize the Client\n");
 
+    printf("Client Functioning\n");
+    // /**
     int sock_fd;
     char buffer[MAX_MSG_LEN];
 
@@ -27,13 +28,17 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
     // Send messages to server
     while (1) {
-        printf("Enter message: ");
+        printf("Enter message: \n");
         fgets(buffer, MAX_MSG_LEN, stdin);
         if (send_message(sock_fd, buffer) < 0) {
             printf("Failed to send message\n");
             break;
         }
     }
+    // **/
+
+
+
 
     return EXIT_SUCCESS;
 }
