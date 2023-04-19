@@ -4,6 +4,7 @@ import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Game {
 
@@ -25,8 +26,6 @@ public class Game {
 
     private String action = "";
 
-    private Boolean gameOver = false;
-
     private final ScheduledExecutorService executor;
 
     private Integer alienMoveTimer = 0;
@@ -37,18 +36,27 @@ public class Game {
 
     private Integer shootMoveTimer = 0;
 
+    public final AtomicBoolean gameOver;
+
 
     public Game() {
         matrixGame = new MatrixGame();
         executor = Executors.newSingleThreadScheduledExecutor();
+        gameOver = new AtomicBoolean(false);
     }
 
-    public void printMatriz(){
-        this.matrixGame.printMatriz();
+    public void printStatus(){
+        String s = "\"gameOver\":" + gameOver.get() +
+                ",\"playerLives\":" + playerLives +
+                ",\"playerScore\":" + playerScore +
+                "\n";
+
+        System.out.println(s);
+        matrixGame.printMatriz();
     }
 
     public void checkGameOver(){
-        this.gameOver = (playerLives <= 0) || matrixGame.aliensArrived() ;
+         gameOver.set(playerLives <= 0 || matrixGame.aliensArrived());
     }
 
     public void setAction(String action) {
@@ -113,26 +121,28 @@ public class Game {
 //            else
 //                matrizGame.createUFO(0);
         } else if (firstChar=='p') {
-            matrixGame.printMatriz();
+            printStatus();
         } else if (action.equals("killall")) {
-        matrixGame.killAllAliens();
-        } else if (action.equals("finish")) {
+            matrixGame.killAllAliens();
+        } else if (action.equals("killgame")) {
+            gameOver.set(true);
             executor.shutdown();
+            System.out.println("Game Over doAction");
         }
         else {
             System.out.println("Error: "+ "No existe la accion");
         }
         action = "";
-        matrixGame.printMatriz();
+        printStatus();
     }
 
     public void startGameLoop() {
         executor.scheduleAtFixedRate(() -> {
             checkGameOver();
-            if (gameOver) {
-                System.out.println("Game Over");
-                System.out.print(getStatus());
+            if (gameOver.get()) {
                 executor.shutdown();
+                System.out.println("Game Over gameloop");
+                printStatus();
             } else {
                 updateGame();
             }
@@ -145,8 +155,6 @@ public class Game {
         if (matrixGame.aliensDied()){
             playerLives++;
             matrixGame.initializeGameMatriz();
-            printMatriz();
-            System.out.print(getStatus());
         }
 
         // move shots
@@ -170,7 +178,7 @@ public class Game {
     @Override
     public String toString() {
         return "{"+
-                "\"gameOver\":" + gameOver +
+                "\"gameOver\":" + gameOver.get() +
                 ",\"playerLives\":" + playerLives +
                 ",\"playerScore\":" + playerScore +
                 ",\"matrizGame\":" + matrixGame.toString() +
@@ -178,7 +186,7 @@ public class Game {
     }
     public String getStatus() {
         StringBuilder result = new StringBuilder();
-        result.append((gameOver ? String.valueOf(1) : String.valueOf(0)));
+        result.append((gameOver.get() ? String.valueOf(1) : String.valueOf(0)));
         result.append(",");
         result.append(playerLives);
         result.append(",");
