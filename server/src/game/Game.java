@@ -1,12 +1,13 @@
 package game;
 
+import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class Game {
 
-    private MatrizGame matrizGame;
+    private MatrixGame matrixGame;
 
     private final Integer gameSpeed = 50;
 
@@ -14,7 +15,7 @@ public class Game {
 
     private Integer alienSpeed = 500;
 
-    private Integer alienShootTimerWait = 500;
+    private Integer alienPeriodShot = 500;
 
     private final Integer shotSpeed = 50;
 
@@ -38,34 +39,68 @@ public class Game {
 
 
     public Game() {
-        matrizGame = new MatrizGame();
+        matrixGame = new MatrixGame();
         executor = Executors.newSingleThreadScheduledExecutor();
     }
 
     public void printMatriz(){
-        this.matrizGame.printMatriz();
+        this.matrixGame.printMatriz();
     }
 
     public void checkGameOver(){
-        this.gameOver = (playerLives <= 0) || matrizGame.aliensArrived() ;
+        this.gameOver = (playerLives <= 0) || matrixGame.aliensArrived() ;
     }
 
     public void setAction(String action) {
         this.action = action;
     }
 
+    private void checkShootResult(Integer shotResult) {
+        switch (shotResult){
+            case -1:
+                playerLives -= 1;
+                break;
+            case 0:
+                break;
+            case 1:
+                playerScore += 10;
+                break;
+            case 2:
+                playerScore += 20;
+                break;
+            case 3:
+                playerScore += 40;
+                break;
+            case 14:
+                playerScore += generateRandomScore();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private static Integer generateRandomScore() {
+        Integer min = 50;
+        Integer max = 200;
+        Integer increment = 50;
+        Random random = new Random();
+        int randomNum = min +
+                random.nextInt((max - min) / increment + 1) * increment;
+        return randomNum;
+    }
+
     public void doAction() {
-        matrizGame.printMatriz();
+        matrixGame.printMatriz();
         char firstChar = action.charAt(0);
         // shoot player
         if (firstChar=='s') {
-//            matrizGame.shootPlayer();
+            checkShootResult(matrixGame.shootPlayer());
         // left move player
         } else if (firstChar=='r') {
-            matrizGame.movePlayer(1);
+            matrixGame.movePlayer(1);
         // right move player
         } else if (firstChar=='l') {
-            matrizGame.movePlayer(-1);
+            matrixGame.movePlayer(-1);
         // create UFO
         } else if (firstChar=='u') {
 //            if (action.length()==2){
@@ -79,9 +114,9 @@ public class Game {
 //            else
 //                matrizGame.createUFO(0);
         } else if (action.equals("killall")) {
-            matrizGame.killAllAliens();
+            matrixGame.killAllAliens();
         } else if (firstChar=='p') {
-            matrizGame.printMatriz();
+            matrixGame.printMatriz();
         }
         else {
             System.out.println("Error: "+ "No existe la accion");
@@ -103,27 +138,26 @@ public class Game {
     }
 
     private void updateGame() {
-        if (matrizGame.aliensDied()){
+
+        // check aliens died -> restart matrizGame
+        if (matrixGame.aliensDied()){
             playerLives++;
-            matrizGame.initializeGameMatriz();
+            matrixGame.initializeGameMatriz();
             printMatriz();
             System.out.print(getStatus());
         }
-        // do bunkers will hit
-        // do player will hit
+
         // move shots
         // move aliens
         alienMoveTimer += gameSpeed;
         if (alienMoveTimer >= alienSpeed) {
-            matrizGame.moveAliens();
+            matrixGame.moveAliens();
             alienMoveTimer = 0;
         }
 
         // shoot aliens
 
         // move UFO
-
-        // check aliens died -> restart matrizGame
 
         // do action
         if (!action.isEmpty())
@@ -137,7 +171,7 @@ public class Game {
                 "\"gameOver\":" + gameOver +
                 ",\"playerLives\":" + playerLives +
                 ",\"playerScore\":" + playerScore +
-                ",\"matrizGame\":" + matrizGame.toString() +
+                ",\"matrizGame\":" + matrixGame.toString() +
                 "}";
     }
     public String getStatus() {
@@ -148,7 +182,7 @@ public class Game {
         result.append(",");
         result.append(playerScore);
         result.append(",");
-        result.append(matrizGame.getMatrizString());
+        result.append(matrixGame.getMatrizString());
         return   result.toString();
     }
 
