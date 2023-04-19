@@ -15,11 +15,13 @@ class GameTest {
 //        game.startGameLoop();
 //        Scanner scanner = new Scanner(System.in);
 //        String input = "";
-//        while (!input.equals("salir")) {
+//        while (!game.gameOver.get()) {
 //            input = scanner.nextLine();
 //            game.setAction(input);
 //        }
-//        scanner.close();
+
+//        Server server = new Server();
+//        server.start(25565);
     }
 
 }
