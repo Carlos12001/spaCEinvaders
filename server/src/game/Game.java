@@ -12,7 +12,7 @@ public class Game {
 
     private final Integer gameSpeed = 50;
 
-    private final Integer ufoSpeed = 200;
+    private final Integer ufoSpeed = 250;
 
     private Integer alienSpeed = 500;
 
