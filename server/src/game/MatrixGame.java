@@ -18,8 +18,6 @@ public class MatrixGame {
 
     public Boolean isUFOPresent = false;
 
-    private Integer moveDirectionUFO = -1;
-
     public MatrixGame(){
         this.matrix = new Integer[rowNum][colNum];
         initializeGameMatriz();
@@ -88,13 +86,117 @@ public class MatrixGame {
         return true;
     }
 
-    public void createUFO(Integer row){
+    public void createUFO(Integer row) {
+        // Verificar si no existe una UFO previamente
+        if (!isUFOPresent) {
+            // Revisar si en la fila proporcionada hay
+            // otros elementos diferentes a 0
+            boolean emptyRow = true;
+            for (int col = 0; col < colNum; col++) {
+                if (matrix[row][col] != 0) {
+                    emptyRow = false;
+                    break;
+                }
+            }
 
+            // Si la fila esta vacia, crear la UFO
+            if (emptyRow) {
+                matrix[row][0] = 14;
+                isUFOPresent = true;
+            }
+        }
     }
 
-    public void moveUFO(){
 
+    public Integer moveUFO() {
+        if (!isUFOPresent) {
+            return 0;
+        }
+
+        Integer ufoRow = -1;
+        Integer ufoCol = -1;
+
+        // Encuentra la posicion de la UFO
+        for (int row = 0; row < rowNum; row++) {
+            for (int col = 0; col < colNum; col++) {
+                if (matrix[row][col] == 14) {
+                    ufoRow = row;
+                    ufoCol = col;
+                    break;
+                }
+            }
+            if (ufoRow != -1) {
+                break;
+            }
+        }
+
+        // Si la UFO no se encontro, establece isUFOPresent en false y devuelve 0
+        if (ufoRow == -1) {
+            isUFOPresent = false;
+            return 0;
+        }
+
+        // Si la UFO esta en el borde derecho, eliminar la UFO y devolver 0
+        if (ufoCol == colNum - 1) {
+            matrix[ufoRow][ufoCol] = 0;
+            isUFOPresent = false;
+            return 0;
+        }
+
+        // Comprueba si hay un disparo del jugador debajo de la UFO
+        if (matrix[ufoRow + 1][ufoCol + 1] == 7) {
+            matrix[ufoRow][ufoCol] = 0;
+            matrix[ufoRow + 1][ufoCol + 1] = 0;
+            isUFOPresent = false;
+            return 14;
+        }
+        // 0 14 ... 0
+        if (ufoCol>0){
+            if (matrix[ufoRow][ufoCol - 1] == 7){
+                matrix[ufoRow][ufoCol] = 0;
+                matrix[ufoRow][ufoCol - 1] = 0;
+                isUFOPresent = false;
+                return 14;
+            }
+        }
+        
+        // 0 0 14 ... 0
+        if (ufoCol>1){
+            if (matrix[ufoRow][ufoCol - 2] == 7){
+                matrix[ufoRow][ufoCol] = 0;
+                matrix[ufoRow][ufoCol - 2] = 0;
+                isUFOPresent = false;
+                return 14;
+            }
+        }
+        
+        // 0 ... 14 0
+        if (ufoCol<colNum-1){
+            if (matrix[ufoRow][ufoCol + 1] == 7){
+                matrix[ufoRow][ufoCol] = 0;
+                matrix[ufoRow][ufoCol + 1] = 0;
+                isUFOPresent = false;
+                return 14;
+            }
+        }
+
+        // 0 ... 14 0 0
+        if (ufoCol<colNum-2){
+            if (matrix[ufoRow][ufoCol + 2] == 7){
+                matrix[ufoRow][ufoCol] = 0;
+                matrix[ufoRow][ufoCol + 2] = 0;
+                isUFOPresent = false;
+                return 14;
+            }
+        }
+        
+        // Mueve la UFO hacia la derecha
+        matrix[ufoRow][ufoCol] = 0;
+        matrix[ufoRow][ufoCol + 1] = 14;
+
+        return 0;
     }
+
 
     public Integer[] moveShootsPlayer() {
         List<Integer> aliensHit = new ArrayList<>();
@@ -102,13 +204,13 @@ public class MatrixGame {
         for (int row = 0; row < rowNum; row++) {
             for (int col = 0; col < colNum; col++) {
                 if (matrix[row][col] == 7) {
-                    // Si el disparo está en la fila 0, eliminarlo
+                    // Si el disparo esta en la fila 0, eliminarlo
                     if (row == 0) {
                         matrix[row][col] = 0;
                     } else {
                         int aboveElement = matrix[row - 1][col];
 
-                        // Si hay un espacio vacío arriba del disparo
+                        // Si hay un espacio vacio arriba del disparo
                         if (aboveElement == 0) {
                             matrix[row][col] = 0;
                             matrix[row - 1][col] = 7;
@@ -280,7 +382,7 @@ public class MatrixGame {
         Random random = new Random();
         Integer selectedColumn = alienColumns.get(random.nextInt(alienColumns.size()));
 
-        // Encuentra el alien más abajo en la columna seleccionada
+        // Encuentra el alien mas abajo en la columna seleccionada
         Integer lowestAlienRow = -1;
         for (Integer row = 0; row < playerRow; row++) {
             if (matrix[row][selectedColumn] >= 1 && matrix[row][selectedColumn] <= 3) {
@@ -292,7 +394,7 @@ public class MatrixGame {
             return;
         }
 
-        // Verifica que la fila de abajo esté vacía antes de poner el disparo del alien
+        // Verifica que la fila de abajo este vacia antes de poner el disparo del alien
         if (matrix[lowestAlienRow + 1][selectedColumn] == 0) {
             // Verifica si hay espacio suficiente (3 filas) para el disparo desde la fila del jugador
             if (playerRow - lowestAlienRow >= 4) {

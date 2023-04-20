@@ -12,11 +12,11 @@ public class Game {
 
     private final Integer gameSpeed = 50;
 
-    private final Integer ufoSpeed = 250;
+    private final Integer ufoSpeed = 500;
 
     private Integer alienSpeed = 500;
 
-    private Integer alienPeriodShoot = 2000;
+    private Integer alienPeriodShoot = 400;
 
     private final Integer shootSpeed = 100;
 
@@ -85,7 +85,9 @@ public class Game {
                 playerScore += 40;
                 break;
             case 14:
-                playerScore += generateRandomScore();
+                Integer points = generateRandomScore();
+                System.out.println("UFO points: " + points);
+                playerScore += points;
                 break;
             default:
                 break;
@@ -115,16 +117,16 @@ public class Game {
             matrixGame.movePlayer(-1);
         // create UFO
         } else if (firstChar=='u') {
-//            if (action.length()==2){
-//                try {
-//                int ufoNumber = Integer.parseInt(action.substring(1));
-//                    matrizGame.createUFO(ufoNumber);
-//                } catch (NumberFormatException e) {
-//                    matrizGame.createUFO(0);
-//                }
-//            }
-//            else
-//                matrizGame.createUFO(0);
+            if (action.length()<=2){
+                try {
+                int ufoNumber = Integer.parseInt(action.substring(1));
+                    matrixGame.createUFO(ufoNumber);
+                } catch (NumberFormatException e) {
+                    matrixGame.createUFO(0);
+                }
+            }
+            else
+                matrixGame.createUFO(0);
         } else if (firstChar=='p') {
             printStatus();
         } else if (action.equals("killall")) {
@@ -200,14 +202,17 @@ public class Game {
         // shoot aliens
         alienShootTimer += gameSpeed;
         if (alienShootTimer >= alienPeriodShoot) {
-            Integer[] shotsMoveAliens = matrixGame.moveShootsAliens();
-            for (Integer shot : shotsMoveAliens) {
-                checkShootResult(shot);
-            }
+            matrixGame.shootAliens();
             alienShootTimer = 0;
         }
 
         // move UFO
+        ufoMoveTimer += gameSpeed;
+        if (ufoMoveTimer >= ufoSpeed) {
+            Integer result = matrixGame.moveUFO();
+            checkShootResult(result);
+            ufoMoveTimer = 0;
+        }
 
         // do action
         if (!action.isEmpty())
