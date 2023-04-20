@@ -81,7 +81,7 @@ void renderChar(char* inputChar, SDL_Renderer *renderer) {
             }
             else if (value == 1) {
                 //printf("en1 ");
-                printf("%d ", currentx);
+                //printf("%d ", currentx);
                 showPicture(value, renderer, currentx, currenty);
             }
             else if (value == 2) {

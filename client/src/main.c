@@ -51,7 +51,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
     IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG);
     //SDL_Delay(2000);
     bool run = true;
-    int abc = 1;
+
     while(run){
         SDL_Event ev;
         while(SDL_PollEvent(&ev))
@@ -63,10 +63,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
                     break;
             }
         }
-        if(abc == 1){
-            renderChar(inputChar, renderer);
-            abc = 0;
-        }
+        renderChar(inputChar, renderer);
     }
 
 
