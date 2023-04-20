@@ -46,7 +46,7 @@ include_directories(
 )
 
 # Create executable
-add_executable(${PROJECT_NAME} main.c connections/csocket.c)
+add_executable(${PROJECT_NAME} main.c connections/csocket.c gui/item.c gui/item.h lib/SDL2_image/x86_64-w64-mingw32/include/SDL2/SDL_image.h)
 
 # Link libraries
 target_link_libraries(${PROJECT_NAME}
