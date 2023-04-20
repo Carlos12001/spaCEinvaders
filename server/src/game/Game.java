@@ -16,13 +16,13 @@ public class Game {
 
     private Integer alienSpeed = 500;
 
-    private Integer alienPeriodShot = 500;
+    private Integer alienPeriodShoot = 2000;
 
-    private final Integer shotPlayerSpeed = 50;
+    private final Integer shootSpeed = 100;
 
     private Integer playerLives = 3;
 
-    private Integer playerScore = 1000;
+    private Integer playerScore = 0;
 
     private String action = "";
 
@@ -34,7 +34,9 @@ public class Game {
 
     private Integer ufoMoveTimer = 0;
 
-    private Integer shootPlayerMoveTimer = 0;
+    private Integer shootMoveTimer = 0;
+
+    private Integer counterKillAliens = 0;
 
     public final AtomicBoolean gameOver;
 
@@ -42,6 +44,7 @@ public class Game {
         matrixGame = new MatrixGame();
         executor = Executors.newSingleThreadScheduledExecutor();
         gameOver = new AtomicBoolean(false);
+        counterKillAliens = 0;
     }
 
     public void printStatus(){
@@ -70,12 +73,15 @@ public class Game {
             case 0:
                 break;
             case 1:
+                counterKillAliens++;
                 playerScore += 10;
                 break;
             case 2:
+                counterKillAliens++;
                 playerScore += 20;
                 break;
             case 3:
+                counterKillAliens++;
                 playerScore += 40;
                 break;
             case 14:
@@ -150,20 +156,37 @@ public class Game {
 
     private void updateGame() {
 
-        // check aliens died -> restart matrizGame
+        if (counterKillAliens == 10) {
+            alienSpeed =  400;
+        } else if (counterKillAliens == 20) {
+            alienSpeed =  300;
+        }
+
+        // check aliens died -> reincia el juego y aumenta una vida
         if (matrixGame.aliensDied()){
+            alienMoveTimer = 0;
+            alienShootTimer = 0;
+            ufoMoveTimer = 0;
+            shootMoveTimer = 0;
+            counterKillAliens = 0;
+            alienSpeed = 500;
             playerLives++;
             matrixGame.initializeGameMatriz();
         }
 
         // move shots player
-        shootPlayerMoveTimer += gameSpeed;
-        if (shootPlayerMoveTimer >= shotPlayerSpeed) {
-            Integer[] shotsMoveResult = matrixGame.moveShootsPlayer();
+        shootMoveTimer += gameSpeed;
+        if (shootMoveTimer >= shootSpeed) {
+            Integer[] shotsMoveResult;
+            shotsMoveResult = matrixGame.moveShootsPlayer();
             for (Integer shot : shotsMoveResult) {
                 checkShootResult(shot);
             }
-            shootPlayerMoveTimer = 0;
+            shotsMoveResult = matrixGame.moveShootsAliens();
+            for (Integer shot : shotsMoveResult) {
+                checkShootResult(shot);
+            }
+            shootMoveTimer = 0;
         }
 
         // move aliens
@@ -173,13 +196,15 @@ public class Game {
             alienMoveTimer = 0;
         }
 
+
         // shoot aliens
         alienShootTimer += gameSpeed;
-        if (alienShootTimer >= alienPeriodShot) {
+        if (alienShootTimer >= alienPeriodShoot) {
             Integer[] shotsMoveAliens = matrixGame.moveShootsAliens();
             for (Integer shot : shotsMoveAliens) {
                 checkShootResult(shot);
             }
+            alienShootTimer = 0;
         }
 
         // move UFO
