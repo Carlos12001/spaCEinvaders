@@ -34,18 +34,6 @@ class MatrixGameTest {
     }
 
     @Test
-    void createUFO() {
-    }
-
-    @Test
-    void moveUFO() {
-    }
-
-    @Test
-    void moveShoots() {
-    }
-
-    @Test
     void movePlayer() {
         // Move player to the left edge
         for (Integer i = 0; i < 50; i++) {
@@ -286,5 +274,221 @@ class MatrixGameTest {
         setMatrizMethod.invoke(matrixGame, (Object) testMatrix);
         matrixGame.shotAliens();
         assertTrue(Arrays.deepEquals(expectMatriz, matrixGame.getMatrix()));
+    }
+
+    @Test
+    void testCreateUFO() {
+    }
+
+    @Test
+    void testMoveUFO() {
+    }
+
+    @Test
+    void moveShootsPlayer() throws InvocationTargetException,
+            IllegalAccessException, NoSuchMethodException {
+        Method setMatrizMethod = MatrixGame.class.getDeclaredMethod(
+                "setMatrix", Integer[][].class);
+        setMatrizMethod.setAccessible(true);
+        Integer[][] testMatrix;
+        Integer[][] expectMatriz;
+        Integer[] result;
+
+        testMatrix = new Integer[][] {
+                {   0,  0,  1,  0,  0   },
+                {   0,  0,  0,  0,  0   },
+                {   0,  0,  0,  0,  0   },
+                {   0,  0,  17, 0,  0   },
+                {   10, 0,  0,  0,  0   }
+        };
+        expectMatriz = new Integer[][] {
+                {   0,  0,  1,  0,  0   },
+                {   7,  0,  0,  0,  0   },
+                {   0,  0,  0,  0,  0   },
+                {   0,  0,  17, 0,  0   },
+                {   10, 0,  0,  0,  0   }
+        };
+        setMatrizMethod.invoke(matrixGame, (Object) testMatrix);
+        matrixGame.printMatriz();
+        matrixGame.shootPlayer();
+        matrixGame.printMatriz();
+        result = matrixGame.moveShootsPlayer();
+        matrixGame.printMatriz();
+        result = matrixGame.moveShootsPlayer();
+        matrixGame.printMatriz();
+        assertTrue(Arrays.deepEquals(expectMatriz, matrixGame.getMatrix()));
+        result = matrixGame.moveShootsPlayer();
+        matrixGame.printMatriz();
+        result = matrixGame.moveShootsPlayer();
+        matrixGame.printMatriz();
+        result = matrixGame.moveShootsPlayer();
+        matrixGame.printMatriz();
+        expectMatriz = new Integer[][] {
+                {   0,  0,  1,  0,  0   },
+                {   0,  0,  0,  0,  0   },
+                {   0,  0,  0,  0,  0   },
+                {   0,  0,  17, 0,  0   },
+                {   10, 0,  0,  0,  0   }
+        };
+        assertTrue(Arrays.deepEquals(expectMatriz, matrixGame.getMatrix()));
+        assertTrue(Arrays.deepEquals(new Integer[]{}, result));
+
+        testMatrix = new Integer[][] {
+                {   0,  0,  1,  0,  0   },
+                {   0,  0,  0,  0,  0   },
+                {   0,  0,  0,  0,  0   },
+                {   0,  0,  17, 0,  0   },
+                {   0, 0,  10,  0,  0   }
+        };
+        expectMatriz = new Integer[][] {
+                {   0,  1,  0,  0,  0   },
+                {   0,  7,  0,  0,  0   },
+                {   0,  0,  0,  0,  0   },
+                {   0,  0,  17, 0,  0   },
+                {   0, 10,  0,  0,  0   }
+        };
+        setMatrizMethod.invoke(matrixGame, (Object) testMatrix);
+        matrixGame.printMatriz();
+        matrixGame.movePlayer(-1);
+        matrixGame.shootPlayer();
+        matrixGame.moveAliens();
+        matrixGame.printMatriz();
+        result = matrixGame.moveShootsPlayer();
+        result = matrixGame.moveShootsPlayer();
+        matrixGame.printMatriz();
+
+        assertTrue(Arrays.deepEquals(expectMatriz, matrixGame.getMatrix()));
+        assertTrue(Arrays.deepEquals(new Integer[]{}, result));
+        expectMatriz = new Integer[][] {
+                {   0,  0,  0,  0,  0   },
+                {   0,  0,  0,  0,  0   },
+                {   0,  0,  0,  0,  0   },
+                {   0,  0,  17, 0,  0   },
+                {   0, 10,  0,  0,  0   }
+        };
+        result = matrixGame.moveShootsPlayer();
+        matrixGame.printMatriz();
+
+        assertTrue(Arrays.deepEquals(expectMatriz, matrixGame.getMatrix()));
+        assertTrue(Arrays.deepEquals(new Integer[]{1}, result));
+        testMatrix = new Integer[][] {
+                {   0,  0,  0,  0,  2   },
+                {   0,  0,  0,  0,  0   },
+                {   0,  0,  0,  0,  0   },
+                {   0,  0,  17, 0,  0   },
+                {   0, 0,  10,  0,  0   }
+        };
+        expectMatriz = new Integer[][] {
+                {   0,  0,  0,  2,  0   },
+                {   0,  0,  0,  7,  0   },
+                {   0,  0,  0,  0,  0   },
+                {   0,  0,  17, 0,  0   },
+                {   0, 0,  0,  0,  10   }
+        };
+        setMatrizMethod.invoke(matrixGame, (Object) testMatrix);
+        matrixGame.printMatriz();
+        matrixGame.movePlayer(1);
+        matrixGame.shootPlayer();
+        matrixGame.movePlayer(1);
+        matrixGame.moveAliens();
+        matrixGame.printMatriz();
+        result = matrixGame.moveShootsPlayer();
+        result = matrixGame.moveShootsPlayer();
+        matrixGame.printMatriz();
+
+        assertTrue(Arrays.deepEquals(expectMatriz, matrixGame.getMatrix()));
+        assertTrue(Arrays.deepEquals(new Integer[]{}, result));
+        expectMatriz = new Integer[][] {
+                {   0,  0,  0,  0,  0   },
+                {   0,  0,  0,  0,  0   },
+                {   0,  0,  0,  0,  0   },
+                {   0,  0,  17, 0,  0   },
+                {   0, 0,  0,  0,  10   }
+        };
+        result = matrixGame.moveShootsPlayer();
+        matrixGame.printMatriz();
+
+        assertTrue(Arrays.deepEquals(expectMatriz, matrixGame.getMatrix()));
+        assertTrue(Arrays.deepEquals(new Integer[]{2}, result));
+
+        testMatrix = new Integer[][] {
+                {   0,  0,  0,  0,  2   },
+                {   0,  0,  0,  0,  0   },
+                {   0,  0,  0,  0,  0   },
+                {   0,  0,  17, 0,  0   },
+                {   0, 0,  10,  0,  0   }
+        };
+        expectMatriz = new Integer[][] {
+                {   0,  0,  0,  2,  0   },
+                {   0,  0,  0,  4,  0   },
+                {   0,  0,  0,  7,  0   },
+                {   0,  0,  17, 0,  0   },
+                {   0, 0,  0,  0,  10   }
+        };
+        setMatrizMethod.invoke(matrixGame, (Object) testMatrix);
+        matrixGame.printMatriz();
+        matrixGame.movePlayer(1);
+        matrixGame.shootPlayer();
+        matrixGame.movePlayer(1);
+        matrixGame.moveAliens();
+        matrixGame.shotAliens();
+        matrixGame.printMatriz();
+        result = matrixGame.moveShootsPlayer();
+        matrixGame.printMatriz();
+
+        assertTrue(Arrays.deepEquals(expectMatriz, matrixGame.getMatrix()));
+        assertTrue(Arrays.deepEquals(new Integer[]{}, result));
+        expectMatriz = new Integer[][] {
+                {   0,  0,  0,  2,  0   },
+                {   0,  0,  0,  0,  0   },
+                {   0,  0,  0,  0,  0   },
+                {   0,  0,  17, 0,  0   },
+                {   0, 0,  0,  0,  10   }
+        };
+        result = matrixGame.moveShootsPlayer();
+        matrixGame.printMatriz();
+
+        assertTrue(Arrays.deepEquals(expectMatriz, matrixGame.getMatrix()));
+        assertTrue(Arrays.deepEquals(new Integer[]{}, result));
+    }
+
+    @Test
+    void moveShootsAliens() throws InvocationTargetException,
+            IllegalAccessException, NoSuchMethodException {
+        Method setMatrizMethod = MatrixGame.class.getDeclaredMethod(
+                "setMatrix", Integer[][].class);
+        setMatrizMethod.setAccessible(true);
+        Integer[][] testMatrix;
+        Integer[][] expectMatriz;
+        Integer[] result;
+
+
+
+        testMatrix = new Integer[][] {
+                {   0,  0,  0,  0,  2   },
+                {   0,  0,  0,  0,  0   },
+                {   0,  0,  0,  0,  0   },
+                {   0,  0,  17, 0,  0   },
+                {   0, 0,  10,  0,  0   }
+        };
+        expectMatriz = new Integer[][] {
+                {   0,  0,  0,  2,  0   },
+                {   0,  0,  0,  4,  0   },
+                {   0,  0,  0,  7,  0   },
+                {   0,  0,  17, 0,  0   },
+                {   0, 0,  0,  0,  10   }
+        };
+        setMatrizMethod.invoke(matrixGame, (Object) testMatrix);
+        matrixGame.printMatriz();
+        matrixGame.movePlayer(1);
+        matrixGame.moveAliens();
+        matrixGame.shotAliens();
+        matrixGame.printMatriz();
+        result = matrixGame.moveShootsAliens();
+        matrixGame.printMatriz();
+
+        assertTrue(Arrays.deepEquals(expectMatriz, matrixGame.getMatrix()));
+        assertTrue(Arrays.deepEquals(new Integer[]{}, result));
+
     }
 }
