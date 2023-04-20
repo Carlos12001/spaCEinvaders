@@ -96,8 +96,94 @@ public class MatrixGame {
 
     }
 
-    public void moveShoots(){
+    public Integer[] moveShootsPlayer() {
+        List<Integer> aliensHit = new ArrayList<>();
 
+        for (int row = 0; row < rowNum; row++) {
+            for (int col = 0; col < colNum; col++) {
+                if (matrix[row][col] == 7) {
+                    // Si el disparo está en la fila 0, eliminarlo
+                    if (row == 0) {
+                        matrix[row][col] = 0;
+                    } else {
+                        int aboveElement = matrix[row - 1][col];
+
+                        // Si hay un espacio vacío arriba del disparo
+                        if (aboveElement == 0) {
+                            matrix[row][col] = 0;
+                            matrix[row - 1][col] = 7;
+                        }
+                        // Si hay otro disparo arriba del disparo, no hacer nada
+                        else if (aboveElement == 7) {
+                            continue;
+                        }
+                        // Si hay un bunker arriba del disparo
+                        else if (aboveElement >= 17 && aboveElement <= 20) {
+                            matrix[row][col] = 0;
+                            if (aboveElement - 1 == 16) {
+                                matrix[row - 1][col] = 0;
+                            } else {
+                                matrix[row - 1][col] = aboveElement - 1;
+                            }
+                        }
+                        // Si hay un alien o un ufo arriba del disparo
+                        else if ((aboveElement >= 1 && aboveElement <= 3) ||
+                                aboveElement == 14) {
+                            matrix[row][col] = 0;
+                            matrix[row - 1][col] = 0;
+                            aliensHit.add(aboveElement);
+                        }
+                        // Si hay un disparo de un alien arriba del disparo
+                        else if (aboveElement == 4) {
+                            matrix[row][col] = 0;
+                            matrix[row - 1][col] = 0;
+                        }
+                    }
+                }
+            }
+        }
+
+        return aliensHit.toArray(new Integer[0]);
+    }
+
+    public Integer[] moveShootsAliens() {
+        List<Integer> results = new ArrayList<>();
+        for (int row = rowNum - 2; row >= 0; row--) {
+            for (int col = 0; col < colNum; col++) {
+                if (matrix[row][col] == 4) {
+                    int belowElement = matrix[row + 1][col];
+
+                    if (belowElement == 0) {
+                        matrix[row + 1][col] = 4;
+                        matrix[row][col] = 0;
+                    } else if (belowElement == 7) {
+                        matrix[row + 1][col] = 0;
+                        matrix[row][col] = 0;
+                    } else if (belowElement >= 17 && belowElement <= 20) {
+                        matrix[row][col] = 0;
+                        matrix[row + 1][col] -= 1;
+                        if (matrix[row + 1][col] == 16) {
+                            matrix[row + 1][col] = 0;
+                        }
+                    } else if (belowElement == 10) {
+                        matrix[row][col] = 0;
+                        results.add(-1);
+                    } else if (belowElement == 4) {
+                        // Do nothing and move to the next column
+                    }
+
+                }
+            }
+        }
+
+        // Remove alien shots at the last row
+        for (int col = 0; col < colNum; col++) {
+            if (matrix[rowNum - 1][col] == 4) {
+                matrix[rowNum - 1][col] = 0;
+            }
+        }
+
+        return results.toArray(new Integer[0]);
     }
 
     public void movePlayer(Integer direction){
