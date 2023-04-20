@@ -124,6 +124,7 @@ public class Game {
 
     /*
      * This is the method that start the game loop
+     * @param action is the action of the player
      */
     public void setAction(String action) {
         this.action = action;
@@ -131,6 +132,7 @@ public class Game {
 
     /*
      * This is the method that start the game loop
+     * @param shootResult is the result of the shoot
      */
     private void checkShootResult(Integer shotResult) {
         switch (shotResult){
@@ -163,6 +165,7 @@ public class Game {
 
     /*
      * This is the method that start the game loop
+     * @return the random score
      */
     private static Integer generateRandomScore() {
         Integer min = 50;
@@ -311,6 +314,7 @@ public class Game {
 
     /*
      * This is the method that start the game loop
+     * @return the status of the game
      */
     public String getStatus() {
         StringBuilder result = new StringBuilder();
