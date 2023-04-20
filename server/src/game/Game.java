@@ -143,14 +143,17 @@ public class Game {
                 break;
             case 1:
                 counterKillAliens++;
+                System.out.println("Alien 1 killed");
                 playerScore += 10;
                 break;
             case 2:
                 counterKillAliens++;
+                System.out.println("Alien 2 killed");
                 playerScore += 20;
                 break;
             case 3:
                 counterKillAliens++;
+                System.out.println("Alien 3 killed");
                 playerScore += 40;
                 break;
             case 14:
