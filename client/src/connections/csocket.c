@@ -50,6 +50,10 @@ int create_socket(const char *server_ip, int port) {
     return sock_fd;
 }
 
+int getSocket(){
+    return sock_fd;
+}
+
 // Thread function to listen for incoming messages
 void *listen_thread(void *arg) {
     //int sock_fd = *(int *)arg;
@@ -84,10 +88,11 @@ int init_socket(const char *server_ip, int port) {
 }
 
 // Sends a message through the socket
-int send_message(int socket_fd, const char *message) {
+int send_message(const char *message) {
     int bytes_sent;
+    printf("%s", message);
 
-    bytes_sent = send(socket_fd, message, strlen(message), 0);
+    bytes_sent = send(sock_fd, message, strlen(message), 0);
     if (bytes_sent <= 0) {
         printf("Failed to send message\n");
         return -1;
@@ -97,10 +102,10 @@ int send_message(int socket_fd, const char *message) {
 }
 
 // Starts a thread to listen for incoming messages
-void start_listening(int socket_fd) {
+void start_listening() {
     pthread_t thread_id;
 
-    if (pthread_create(&thread_id, NULL, listen_thread, &socket_fd) != 0) {
+    if (pthread_create(&thread_id, NULL, listen_thread, &sock_fd) != 0) {
         printf("Failed to create listening thread\n");
         exit(EXIT_FAILURE);
     }

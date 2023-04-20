@@ -60,7 +60,7 @@ void spaceManager(){
 }
 
 void renderChar(char* inputChar, SDL_Renderer *renderer) {
-    SDL_RenderClear(renderer);
+    //SDL_RenderClear(renderer);
     char* token;
     int i = 0;
 
@@ -70,10 +70,8 @@ void renderChar(char* inputChar, SDL_Renderer *renderer) {
     // process each token
     while(token != NULL) {
         if (i < 3) {
-            printf("%d ", atoi(token)); // print the first 3 elements as integers
+            //printf("%d ", atoi(token)); // print the first 3 elements as integers
         }
-
-
         else {
             int value = atoi(token);
             if (value == 0) {
