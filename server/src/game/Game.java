@@ -6,40 +6,95 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+/*
+    * Game class
+    * This class is the main class of the game
+ */
 public class Game {
 
+    /*
+     * This is the matrix of the game
+     */
     private MatrixGame matrixGame;
 
+    /*
+     * This is the speed of the game
+     */
     private final Integer gameSpeed = 50;
 
+    /*
+     * This is the speed of the ufo
+     */
     private final Integer ufoSpeed = 500;
 
+    /*
+     * This is the speed of the aliens
+     */
     private Integer alienSpeed = 500;
 
+    /*
+     * This is the period of the aliens shoot
+     */
     private Integer alienPeriodShoot = 400;
 
+    /*
+     * This is the speed of the shoot
+     */
     private final Integer shootSpeed = 100;
 
+    /*
+     * This is the timer of the aliens move
+     */
     private Integer playerLives = 3;
 
+    /*
+     * This is the score of the player
+     */
     private Integer playerScore = 0;
 
+    /*
+     * This is the action of the player
+     */
     private String action = "";
 
+    /*
+     * This is the executor of the game
+     */
     private final ScheduledExecutorService executor;
 
+    /*
+     * This is the timer of the aliens move
+     */
     private Integer alienMoveTimer = 0;
 
+    /*
+     * This is the timer of the aliens shoot
+     */
     private Integer alienShootTimer = 0;
 
+    /*
+     * This is the timer of the ufo move
+     */
     private Integer ufoMoveTimer = 0;
 
+    /*
+     * This is the timer of the shoot move
+     */
     private Integer shootMoveTimer = 0;
 
+    /*
+     * This is the counter of the aliens killed
+     */
     private Integer counterKillAliens = 0;
 
+    /*
+     * This is the counter of the aliens killed
+     */
     public final AtomicBoolean gameOver;
 
+    /*
+     * This is the constructor of the game
+     */
     public Game() {
         matrixGame = new MatrixGame();
         executor = Executors.newSingleThreadScheduledExecutor();
@@ -47,6 +102,9 @@ public class Game {
         counterKillAliens = 0;
     }
 
+    /*
+     * This is the method that start the game loop
+     */
     public void printStatus(){
         String s = "\"gameOver\":" + gameOver.get() +
                 ",\"playerLives\":" + playerLives +
@@ -57,14 +115,23 @@ public class Game {
         matrixGame.printMatriz();
     }
 
+    /*
+     * This is the method that start the game loop
+     */
     public void checkGameOver(){
          gameOver.set(playerLives <= 0 || matrixGame.aliensArrived());
     }
 
+    /*
+     * This is the method that start the game loop
+     */
     public void setAction(String action) {
         this.action = action;
     }
 
+    /*
+     * This is the method that start the game loop
+     */
     private void checkShootResult(Integer shotResult) {
         switch (shotResult){
             case -1:
@@ -94,6 +161,9 @@ public class Game {
         }
     }
 
+    /*
+     * This is the method that start the game loop
+     */
     private static Integer generateRandomScore() {
         Integer min = 50;
         Integer max = 200;
@@ -104,6 +174,9 @@ public class Game {
         return randomNum;
     }
 
+    /*
+     * This is the method that start the game loop
+     */
     public void doAction() {
         char firstChar = action.charAt(0);
         // shoot player
@@ -143,6 +216,9 @@ public class Game {
         printStatus();
     }
 
+    /*
+     * This is the method that start the game loop
+     */
     public void startGameLoop() {
         executor.scheduleAtFixedRate(() -> {
             checkGameOver();
@@ -156,6 +232,9 @@ public class Game {
         }, 0, gameSpeed, TimeUnit.MILLISECONDS);
     }
 
+    /*
+     * This is the method that update the game
+     */
     private void updateGame() {
 
         if (counterKillAliens == 10) {
@@ -229,6 +308,10 @@ public class Game {
                 ",\"matrizGame\":" + matrixGame.toString() +
                 "}";
     }
+
+    /*
+     * This is the method that start the game loop
+     */
     public String getStatus() {
         StringBuilder result = new StringBuilder();
         result.append((gameOver.get() ? String.valueOf(1) : String.valueOf(0)));
