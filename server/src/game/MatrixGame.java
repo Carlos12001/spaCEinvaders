@@ -290,9 +290,12 @@ public class MatrixGame {
             return;
         }
 
-        // Verifica si hay espacio suficiente (3 filas) para el disparo desde la fila del jugador
-        if (playerRow - lowestAlienRow >= 4) {
-            matrix[lowestAlienRow + 1][selectedColumn] = 4;
+        // Verifica que la fila de abajo esté vacía antes de poner el disparo del alien
+        if (matrix[lowestAlienRow + 1][selectedColumn] == 0) {
+            // Verifica si hay espacio suficiente (3 filas) para el disparo desde la fila del jugador
+            if (playerRow - lowestAlienRow >= 4) {
+                matrix[lowestAlienRow + 1][selectedColumn] = 4;
+            }
         }
     }
 
