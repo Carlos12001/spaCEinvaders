@@ -205,8 +205,10 @@ public class MatrixGame {
         // Check if the new position is within the boundaries of the matrix
         if (newPlayerCol >= 0 && newPlayerCol < colNum) {
             // Move the player to the new position
-            matrix[playerRow][playerCol] = 0;
-            matrix[playerRow][newPlayerCol] = 10;
+            if (matrix[playerRow][newPlayerCol] == 0) {
+                matrix[playerRow][playerCol] = 0;
+                matrix[playerRow][newPlayerCol] = 10;
+            }
         }
     }
 
@@ -256,7 +258,7 @@ public class MatrixGame {
         return 0;
     }
 
-    public void shotAliens() {
+    public void shootAliens() {
         List<Integer> alienColumns = new ArrayList<>();
         Integer playerRow = rowNum - 1;
 
