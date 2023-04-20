@@ -16,12 +16,16 @@ public class Main {
         System.out.println("Hello and welcome to the Server!");
         Game game = new Game();
         game.startGameLoop();
+
+        //----------
         Scanner scanner = new Scanner(System.in);
         String input = "";
         while (!game.gameOver.get()) {
             input = scanner.nextLine();
             game.setAction(input);
+            System.out.println(game.getStatus()); // aqui manda al cliente cierto 25ms
         }
+
 
 //        Server server = new Server();
 //        server.start(25565);
