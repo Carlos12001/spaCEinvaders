@@ -4,25 +4,53 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * MatrixGame class
+ * This class is the matrix of the game
+ */
 public class MatrixGame {
 
+    /*
+     * This is the number of rows of the matrix
+     */
     private Integer rowNum = 15;
 
+    /*
+     * This is the number of columns of the matrix
+     */
     private Integer colNum = 30;
 
+    /*
+     * This is the matrix of the game
+     */
     private Integer[][] matrix;
 
+    /*
+     * This is the list of the aliens
+     */
     private Integer colNumAliens = 5;
 
+    /*
+     * This is the direction of the aliens
+     */
     private Integer moveDirectionAliens = -1;
 
+    /*
+     * Check is the ufo is present
+     */
     public Boolean isUFOPresent = false;
 
+    /*
+     * The constructor of the class
+     */
     public MatrixGame(){
         this.matrix = new Integer[rowNum][colNum];
         initializeGameMatriz();
     }
 
+    /*
+     * Initialize the matrix of the game
+     */
     public void initializeGameMatriz(){
         setMatrixZero(matrix);
         for (Integer i = 1; i <  7; i++) {
@@ -58,6 +86,10 @@ public class MatrixGame {
         }
     }
 
+    /*
+     * This method set the matrix to zero
+     * @param matrix is the matrix to set to zero
+     */
     static public void setMatrixZero(Integer[][] matrix) {
         for (Integer i = 0; i < matrix.length; i++) {
             for (Integer j = 0; j < matrix[i].length; j++) {
@@ -66,6 +98,10 @@ public class MatrixGame {
         }
     }
 
+    /*
+     * This check is aliens arrived to earth
+     * @return true if aliens arrived to earth
+     */
     public Boolean aliensArrived(){
         for (Integer j = 0; j < rowNum; j++) {
             if(0 < matrix[rowNum-1][j] && matrix[rowNum-1][j] < 4)
@@ -75,6 +111,10 @@ public class MatrixGame {
         return false;
     }
 
+    /*
+     * Check is all aliens died
+     * @return true if all aliens died
+     */
     public Boolean aliensDied(){
         for (Integer i = 0; i < rowNum; i++) {
             for (Integer j = 0; j < colNum; j++) {
@@ -86,6 +126,10 @@ public class MatrixGame {
         return true;
     }
 
+    /**
+     * This method create the UFO
+     * @param row is the row to create the UFO
+     */
     public void createUFO(Integer row) {
         // Verificar si no existe una UFO previamente
         if (!isUFOPresent) {
@@ -107,7 +151,10 @@ public class MatrixGame {
         }
     }
 
-
+    /*
+     * This method move the UFO
+     * @return return 14 if UFO was killed and return 0 if UFO was not killed
+     */
     public Integer moveUFO() {
         if (!isUFOPresent) {
             return 0;
@@ -197,7 +244,10 @@ public class MatrixGame {
         return 0;
     }
 
-
+    /*
+     * This method move the shoots of the player
+     * @return return the aliens and ufo hit, 0 if no aliens were hit
+     */
     public Integer[] moveShootsPlayer() {
         List<Integer> aliensHit = new ArrayList<>();
 
@@ -248,6 +298,10 @@ public class MatrixGame {
         return aliensHit.toArray(new Integer[0]);
     }
 
+    /*
+     * This method move the shoots of the aliens
+     * @return return the player hit -1, 0 if no player was hit
+     */
     public Integer[] moveShootsAliens() {
         List<Integer> results = new ArrayList<>();
         for (int row = rowNum - 2; row >= 0; row--) {
@@ -288,6 +342,9 @@ public class MatrixGame {
         return results.toArray(new Integer[0]);
     }
 
+    /*
+     * This method move the player
+     */
     public void movePlayer(Integer direction){
 
         Integer playerRow = rowNum - 1;
@@ -314,6 +371,10 @@ public class MatrixGame {
         }
     }
 
+    /*
+     * This method shoots a player
+     * @return return the alien if was hit, 0 if nothing
+     */
     public Integer shootPlayer() {
         Integer playerRow = rowNum - 1;
         Integer playerCol = 0;
@@ -360,6 +421,9 @@ public class MatrixGame {
         return 0;
     }
 
+    /*
+     * Create shoot of the alien
+     */
     public void shootAliens() {
         List<Integer> alienColumns = new ArrayList<>();
         Integer playerRow = rowNum - 1;
@@ -403,6 +467,9 @@ public class MatrixGame {
         }
     }
 
+    /*
+     * This method move the aliens
+     */
     public void moveAliens() {
         Boolean moveDown = false;
         Integer colToCheck = moveDirectionAliens == -1 ? 0 : colNum-1;
@@ -444,7 +511,10 @@ public class MatrixGame {
         }
         matrix = temp;
     }
-    
+
+    /*
+     * This method kill all aliens
+     */
     public void killAllAliens(){
         Integer[][] temp = new Integer[rowNum][colNum];
         setMatrixZero(temp);
@@ -462,6 +532,9 @@ public class MatrixGame {
         matrix = temp;
     }
 
+    /*
+     * Get the matrix as a string
+     */
     public String getMatrizString() {
         StringBuilder result = new StringBuilder();
         for (Integer i = 0; i < rowNum; i++) {
@@ -476,6 +549,9 @@ public class MatrixGame {
         return result.toString();
     }
 
+    /*
+     * Print the matrix
+     */
     public void printMatriz() {
         StringBuilder result = new StringBuilder();
         for (Integer i = 0; i < rowNum; i++) {
@@ -488,16 +564,25 @@ public class MatrixGame {
         System.out.println("------------------------------------------------");
     }
 
+    /*
+        * Set the matrix
+     */
     private void setMatrix(Integer[][] matrix) {
         this.matrix = matrix;
         rowNum = matrix.length;
         colNum = matrix[0].length;
     }
 
+    /*
+     * Get the row number
+     */
     public Integer getRowNum() {
         return rowNum;
     }
 
+    /*
+     * Get the column number
+     */
     public Integer getColNum() {
         return colNum;
     }
@@ -521,6 +606,9 @@ public class MatrixGame {
         return result.toString();
     }
 
+    /*
+     * Get the matrix
+     */
     public Integer[][] getMatrix() {
         return matrix;
     }
