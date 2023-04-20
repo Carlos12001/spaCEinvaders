@@ -47,7 +47,6 @@ void showPicture(int number, SDL_Renderer *renderer, int x, int y){
 
     // Shows what was copied.
     SDL_RenderPresent(renderer);
-
     SDL_DestroyTexture(image_texture);
 
 }
@@ -61,6 +60,7 @@ void spaceManager(){
 }
 
 void renderChar(char* inputChar, SDL_Renderer *renderer) {
+    SDL_RenderClear(renderer);
     char* token;
     int i = 0;
 
@@ -72,43 +72,47 @@ void renderChar(char* inputChar, SDL_Renderer *renderer) {
         if (i < 3) {
             printf("%d ", atoi(token)); // print the first 3 elements as integers
         }
-        /*
-        if(hCount > 29){
-            hCount = 0;
-            currenty += 35;
-            currentx = 5;
-        }
-         */
 
 
         else {
             int value = atoi(token);
             if (value == 0) {
-                printf("vacio");
+                //printf("v ");
             }
             else if (value == 1) {
-                printf("en1 ");
+                //printf("en1 ");
+                printf("%d ", currentx);
+                showPicture(value, renderer, currentx, currenty);
             }
             else if (value == 2) {
-                printf("en2 ");
+                //printf("en2 ");
+                showPicture(value, renderer, currentx, currenty);
             }
             else if (value == 3) {
-                printf("en3 ");
+                //printf("en3 ");
+                showPicture(value, renderer, currentx, currenty);
             }
             else if (value == 10) {
-                printf("powerup1 ");
+                //printf("al ");
+                showPicture(value, renderer, currentx, currenty);
             }
             else if (value == 20) {
-                printf("powerup2 ");
+                //printf("for ");
+                showPicture(value, renderer, currentx, currenty);
             }
             else {
-                printf("unknown ");
+                //printf("unknown ");
+                showPicture(75, renderer, currentx, currenty);
             }
         }
 
+        if(i >= 3){
+            hCount++;
+            currentx += 35;
+            spaceManager();
+        }
         // get the next token
         token = strtok(NULL, ",");
-        currentx += 35;
         i++;
     }
 }
