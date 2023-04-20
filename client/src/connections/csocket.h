@@ -9,9 +9,11 @@
 int init_socket(const char *server_ip, int port);
 
 // Sends a message through the socket
-int send_message(int socket_fd, const char *message);
+int send_message(const char *message);
 
 // Starts a thread to listen for incoming messages
-void start_listening(int socket_fd);
+void start_listening();
+
+int getSocket();
 
 #endif

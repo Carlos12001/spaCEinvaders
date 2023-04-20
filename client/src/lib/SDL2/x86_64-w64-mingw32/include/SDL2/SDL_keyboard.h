@@ -175,7 +175,7 @@ extern DECLSPEC SDL_Scancode SDLCALL SDL_GetScancodeFromKey(SDL_Keycode key);
  * See SDL_Scancode for details.
  *
  * **Warning**: The returned name is by design not stable across platforms,
- * e.g. the name for `SDL_SCANCODE_LGUI` is "Left GUI" under Linux but "Left
+ * e.g. the name for `SDL_SCANCODE_LGUI` is "Left gui" under Linux but "Left
  * Windows" under Microsoft Windows, and some scancodes like
  * `SDL_SCANCODE_NONUSBACKSLASH` don't have any name at all. There are even
  * scancodes that share names, e.g. `SDL_SCANCODE_RETURN` and

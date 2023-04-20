@@ -15,6 +15,22 @@ file(COPY ${CMAKE_SOURCE_DIR}/src/lib/SDL2/x86_64-w64-mingw32/bin/SDL2.dll
         DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 file(COPY ${CMAKE_SOURCE_DIR}/src/lib/SDL2_image/x86_64-w64-mingw32/bin/SDL2_image.dll
         DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+file(COPY ${CMAKE_SOURCE_DIR}/src/icons/1.png
+        DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/icons/)
+file(COPY ${CMAKE_SOURCE_DIR}/src/icons/2.png
+        DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/icons/)
+file(COPY ${CMAKE_SOURCE_DIR}/src/icons/3.png
+        DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/icons/)
+file(COPY ${CMAKE_SOURCE_DIR}/src/icons/4.png
+        DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/icons/)
+file(COPY ${CMAKE_SOURCE_DIR}/src/icons/7.png
+        DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/icons/)
+file(COPY ${CMAKE_SOURCE_DIR}/src/icons/10.png
+        DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/icons/)
+file(COPY ${CMAKE_SOURCE_DIR}/src/icons/14.png
+        DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/icons/)
+file(COPY ${CMAKE_SOURCE_DIR}/src/icons/20.png
+        DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/icons/)
 
 
 # Include SDL2 and SDL2_image headers
@@ -46,7 +62,7 @@ include_directories(
 )
 
 # Create executable
-add_executable(${PROJECT_NAME} main.c connections/csocket.c)
+add_executable(${PROJECT_NAME} main.c connections/csocket.c gui/item.c gui/item.h lib/SDL2_image/x86_64-w64-mingw32/include/SDL2/SDL_image.h)
 
 # Link libraries
 target_link_libraries(${PROJECT_NAME}
