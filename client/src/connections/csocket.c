@@ -90,9 +90,10 @@ int init_socket(const char *server_ip, int port) {
 // Sends a message through the socket
 int send_message(const char *message) {
     int bytes_sent;
-    printf("%s", message);
+    //printf("%s", message);
 
     bytes_sent = send(sock_fd, message, strlen(message), 0);
+    //bytes_sent = send
     if (bytes_sent <= 0) {
         printf("Failed to send message\n");
         return -1;

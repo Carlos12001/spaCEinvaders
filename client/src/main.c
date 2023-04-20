@@ -22,7 +22,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
     printf("Client Functioning\n");
     // /**
 
-    char buffer[MAX_MSG_LEN];
+//    char buffer[MAX_MSG_LEN];
 
     // Connect to server
     init_socket("127.0.0.1", 25565);
@@ -36,8 +36,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
      /**
     while (1) {
         printf("Enter message: \n");
-        fgets(buffer, MAX_MSG_LEN, stdin);
-        if (send_message( buffer) < 0) {
+        char buffer[MAX_MSG_LEN] = "pito\n";
+        //fgets(buffer, MAX_MSG_LEN, stdin);
+        printf("%s", buffer);
+        if (send_message(buffer) < 0) {
             printf("Failed to send message\n");
             break;
         }
@@ -56,6 +58,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
     //strcpy(buffer, "j");
     //send_message(sock_fd, buffer);
 
+
     int abc= 0;
     while(run){
         SDL_Event ev;
@@ -69,13 +72,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
                 case SDL_KEYUP:
                     if(SDLK_j == ev.key.keysym.sym)
                     {
-                        //printf("%s", "j up \n");
-                        strcpy(buffer, "j");
-                        buffer[strlen(buffer)] = '\0';
-                        if (send_message( buffer) < 0) {
-                            printf("Failed to send message\n");
-                            //break;
-                        }
+                        send_message( "j\n");
                     }
 
             }
