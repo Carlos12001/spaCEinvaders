@@ -46,7 +46,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
     SDL_Init(SDL_INIT_VIDEO);
     SDL_Window * win = SDL_CreateWindow("SpaceInviders", SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,1200,675, SDL_WINDOW_OPENGL);
     SDL_Renderer *renderer = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    SDL_SetRenderDrawColor(renderer, 30, 31, 34, 255);
     //SDL_Surface * screen = SDL_GetWindowSurface(win);
     IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG);
     //SDL_Delay(2000);
