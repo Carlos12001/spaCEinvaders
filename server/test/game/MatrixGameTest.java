@@ -10,14 +10,24 @@ import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/*
+    * MatrixGameTest class
+    * This class is the test class of the matrix game
+ */
 class MatrixGameTest {
     MatrixGame matrixGame;
 
+    /*
+     * This method is the setup method of the test class
+     */
     @BeforeEach
     void setUp() {
         matrixGame = new MatrixGame();
     }
 
+    /*
+     * This method is the test method of the initializeGameMatriz method
+     */
     @Test
     void aliensDied() {
         matrixGame.printMatriz();
@@ -33,6 +43,9 @@ class MatrixGameTest {
         matrixGame.printMatriz();
     }
 
+    /*
+     * This method is the test method of the initializeGameMatriz method
+     */
     @Test
     void movePlayer() {
         // Move player to the left edge
@@ -65,10 +78,16 @@ class MatrixGameTest {
         assertEquals(10, (Integer) matrixGame.getMatrix()[matrixGame.getRowNum() - 1][matrixGame.getColNum() / 2 - 1]);
     }
 
+    /*
+     * This method is the test method of the initializeGameMatriz method
+     */
     @Test
     void createShoot() {
     }
 
+    /*
+     * This method is the test method of the initializeGameMatriz method
+     */
     @Test
     void moveAliens() {
         matrixGame.printMatriz();
@@ -79,6 +98,9 @@ class MatrixGameTest {
         }
     }
 
+    /*
+     * This method is the test method of the initializeGameMatriz method
+     */
     @Test
     public void testShootPlayer() throws NoSuchMethodException,
             IllegalAccessException, InvocationTargetException {
@@ -208,6 +230,9 @@ class MatrixGameTest {
 
     }
 
+    /**
+     * Test of moveAliens method, of class MatrixGame.
+     */
     @Test
     void shotAliens() throws NoSuchMethodException,
             IllegalAccessException, InvocationTargetException {
@@ -276,14 +301,23 @@ class MatrixGameTest {
         assertTrue(Arrays.deepEquals(expectMatriz, matrixGame.getMatrix()));
     }
 
+    /**
+     * Test of moveAliens method, of class MatrixGame.
+     */
     @Test
     void testCreateUFO() {
     }
 
+    /**
+     * Test of moveAliens method, of class MatrixGame.
+     */
     @Test
     void testMoveUFO() {
     }
 
+    /**
+     * Test of moveAliens method, of class MatrixGame.
+     */
     @Test
     void moveShootsPlayer() throws InvocationTargetException,
             IllegalAccessException, NoSuchMethodException {
@@ -452,6 +486,12 @@ class MatrixGameTest {
         assertTrue(Arrays.deepEquals(new Integer[]{}, result));
     }
 
+    /**
+     * Testa o método moveShootsAliens.
+     * @throws InvocationTargetException
+     * @throws IllegalAccessException
+     * @throws NoSuchMethodException
+     */
     @Test
     void moveShootsAliens() throws InvocationTargetException,
             IllegalAccessException, NoSuchMethodException {

@@ -6,8 +6,15 @@ import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/*
+    * GameTest class
+    * This class is the test class of the game
+ */
 class GameTest {
 
+    /*
+     * This is the matrix of the game
+     */
     @Test
     void gameplay() {
 //        System.out.println("Hello and welcome to the Server!");
