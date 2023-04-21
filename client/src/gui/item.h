@@ -13,5 +13,6 @@
 
 void showPicture(int number, SDL_Renderer *renderer, int x, int y);
 void renderChar(char* inputChar, SDL_Renderer *renderer);
+void setRenderAgain();
 
 #endif //CLIENT_ITEM_H

@@ -46,7 +46,6 @@ void showPicture(int number, SDL_Renderer *renderer, int x, int y){
     SDL_RenderCopy(renderer, image_texture, &source_rect, &texture_destination);
 
     // Shows what was copied.
-    SDL_RenderPresent(renderer);
     SDL_DestroyTexture(image_texture);
 
 }
@@ -60,7 +59,6 @@ void spaceManager(){
 }
 
 void renderChar(char* inputChar, SDL_Renderer *renderer) {
-    //SDL_RenderClear(renderer);
     char* token;
     int i = 0;
 
@@ -87,6 +85,14 @@ void renderChar(char* inputChar, SDL_Renderer *renderer) {
                 showPicture(value, renderer, currentx, currenty);
             }
             else if (value == 3) {
+                //printf("en3 ");
+                showPicture(value, renderer, currentx, currenty);
+            }
+            else if (value == 4) {
+                //printf("en3 ");
+                showPicture(value, renderer, currentx, currenty);
+            }
+            else if (value == 7) {
                 //printf("en3 ");
                 showPicture(value, renderer, currentx, currenty);
             }
@@ -129,6 +135,12 @@ void renderChar(char* inputChar, SDL_Renderer *renderer) {
         token = strtok(NULL, ",");
         i++;
     }
+}
+
+void setRenderAgain(){
+    currentx = 5;
+    currenty = 5;
+    hCount = 0;
 }
 
 
