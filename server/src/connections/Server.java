@@ -4,10 +4,30 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
+/**
+ * Server class
+ * This class is the main class of the server
+ */
 public class Server {
+
+    /**
+     * This is the server socket
+     */
     private ServerSocket serverSocket;
+
+    /**
+     * This is the list of clients
+     */
     private List<ClientHandler> clients = new ArrayList<>();
+
+    /**
+     * This is the list of subjects
+     */
     private List<Subject> subjects = new ArrayList<>();
+
+    /**
+     * This is the constructor of the class
+     */
     public void start(Integer portNumber) {
         try {
             serverSocket = new ServerSocket(portNumber);
@@ -30,6 +50,9 @@ public class Server {
         }
     }
 
+    /**
+     * This is the stop method of the class
+     */
     public void stop() {
         try {
             serverSocket.close();
@@ -41,6 +64,10 @@ public class Server {
         }
     }
 
+    /**
+     * This is the broadcast method of the class
+     * @param message This is the message to broadcast
+     */
     public void broadcast(String message) {
         for (ClientHandler client : clients) {
             client.send(message);
@@ -48,18 +75,36 @@ public class Server {
         }
     }
 
+    /**
+     * This is the send message method of the class
+     * @param Sid This is the id of the client
+     * @param message This is the message to send
+     */
     public void sendMessage(Integer Sid, String message){
         clients.get(Sid).send(message);
     }
 
+    /**
+     * This is the add subject method of the class
+     * @param id This is the id of the subject
+     */
     public void addSubject(Integer id){
         this.subjects.add(new Subject(id));
     }
 
+    /**
+     * This is the get server instance method of the class
+     * @return Server This is the server instance
+     */
     public Server getServerInstance(){
         return this;
     }
 
+    /**
+     * This is the get subject method of the class
+     * @param id This is the id of the subject
+     * @return Subject This is the subject
+     */
     public void updateState(Integer id, String state){
         //System.out.println("Size" + subjects.size());
         for (Subject subject : subjects){
@@ -71,19 +116,43 @@ public class Server {
         }
     }
 
+    /**
+     * This is the get subject method of the class
+     */
     private class ClientHandler extends Thread {
 
+        /**
+         * This is the socket of the client
+         */
         private Integer sid;
 
-
+        /**
+         * This is the socket of the client
+         */
         private Socket clientSocket;
+
+        /**
+         * This is the output stream of the client
+         */
         private PrintWriter out;
+
+        /**
+         * This is the input stream of the client
+         */
         private BufferedReader in;
 
+        /**
+         * This is the constructor of the class
+         * @param socket This is the socket of the client
+         */
         public ClientHandler(Socket socket) {
             this.clientSocket = socket;
         }
 
+        /**
+         * This is the set sid method of the class
+         * @param message This is the id of the client
+         */
         public void send(String message) {
             out.println(message);
         }
@@ -133,6 +202,9 @@ public class Server {
             }
         }
 
+        /**
+         * This is the stop handler method of the class
+         */
         public void stopHandler() {
             try {
                 in.close();
@@ -144,14 +216,26 @@ public class Server {
             }
         }
 
+        /**
+         * This is the get socket method of the class
+         * @return Socket This is the socket of the client
+         */
         public Socket getSocket(){
             return this.clientSocket;
         }
 
+        /**
+         * This is the set sid method of the class
+         * @param sid This is the id of the client
+         */
         public void setSid(Integer sid) {
             this.sid = sid;
         }
 
+        /**
+         * This is the get sid method of the class
+         * @return Integer This is the id of the client
+         */
         public Integer getSid(){
             return this.sid;
         }
