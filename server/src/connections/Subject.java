@@ -20,14 +20,14 @@ public class Subject {
         this.game = new Game();
         this.game.startGameLoop();
         executor = Executors.newSingleThreadScheduledExecutor();
-        //loop();
+        loop();
     }
 
     public void loop(){
         executor.scheduleAtFixedRate(() -> {
             getState();
             notifyAllObservers();
-        }, 0, 25, TimeUnit.MILLISECONDS);
+        }, 0, 1000, TimeUnit.MILLISECONDS);
     }
 
 
@@ -40,7 +40,7 @@ public class Subject {
 
     public String getState(){
         String s = this.game.getStatus();
-        System.out.println(s);
+//        System.out.println(s);
         return s;
     }
 
