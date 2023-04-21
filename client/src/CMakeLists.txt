@@ -37,6 +37,8 @@ file(COPY ${CMAKE_SOURCE_DIR}/src/icons/19.png
         DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/icons/)
 file(COPY ${CMAKE_SOURCE_DIR}/src/icons/20.png
         DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/icons/)
+file(COPY ${CMAKE_SOURCE_DIR}/src/icons/75.png
+        DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/icons/)
 
 
 # Include SDL2 and SDL2_image headers

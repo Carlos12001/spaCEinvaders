@@ -11,7 +11,7 @@
 #include <ws2tcpip.h>
 #include "csocket.h"
 
-#define MAX_MSG_LEN 1024
+#define MAX_MSG_LEN 4096
 int sock_fd;
 char received_message[MAX_MSG_LEN];
 
@@ -77,6 +77,7 @@ void *listen_thread(void *arg) {
             printf("Reconnected to server.\n");
             continue;
         }
+        memset(received_message, 0, MAX_MSG_LEN);
         strncpy(received_message, buffer, MAX_MSG_LEN);
         printf("Received message: %s\n", buffer);
     }

@@ -20,7 +20,7 @@ public class Subject {
         this.game = new Game();
         this.game.startGameLoop();
         executor = Executors.newSingleThreadScheduledExecutor();
-//        loop();
+        //loop();
     }
 
     public void loop(){
@@ -39,7 +39,9 @@ public class Subject {
     }
 
     public String getState(){
-        return this.game.getStatus();
+        String s = this.game.getStatus();
+        System.out.println(s);
+        return s;
     }
 
     public Integer getId(){
