@@ -182,7 +182,7 @@ public class Server {
                             stopHandler();
                         }
                     }
-                    else {
+                    else if (!inputLine.isEmpty()){
                         updateState(sid, inputLine);
                     }
                     System.out.println("Received message from client " + clientSocket + ": " + inputLine);
