@@ -3,13 +3,19 @@
 //
 
 #include "item.h"
-//#include "../lib/SDL2_image/x86_64-w64-mingw32/include/SDL2/SDL_image.h"
 
 
 int currentx = 5;
 int currenty = 5;
 int hCount = 0;
 
+
+/**
+* Initializes an SDL_Texture from an image file.
+* @param file_name The name of the image file to load.
+* @param renderer A pointer to the SDL_Renderer to use for creating the texture.
+* @return A pointer to the created SDL_Texture.
+*/
 SDL_Texture * init_image_from_file(const char* file_name, SDL_Renderer *renderer){
     SDL_Surface *image = IMG_Load(file_name);
     if (!image) {
@@ -21,12 +27,26 @@ SDL_Texture * init_image_from_file(const char* file_name, SDL_Renderer *renderer
     return image_texture;
 }
 
+/**
+* Gets an SDL_Texture for a specified image file based on a given number.
+* @param renderer A pointer to the SDL_Renderer to use for creating the texture.
+* @param number The number to use for generating the filename of the image file.
+* @return A pointer to the created SDL_Texture.
+*/
 SDL_Texture * getImage(SDL_Renderer *renderer, int number){
     char filename[256];
     sprintf(filename, "./icons/%d.png", number);
     return init_image_from_file(filename, renderer);
 }
 
+
+/**
+* Displays an image on the SDL_Renderer at the specified coordinates.
+* @param number The number of the image to display.
+* @param renderer A pointer to the SDL_Renderer to use for displaying the image.
+* @param x The x-coordinate of the top-left corner of the image's destination rectangle.
+* @param y The y-coordinate of the top-left corner of the image's destination rectangle.
+*/
 void showPicture(int number, SDL_Renderer *renderer, int x, int y){
     SDL_Texture *image_texture = getImage(renderer, number);
 
@@ -50,6 +70,12 @@ void showPicture(int number, SDL_Renderer *renderer, int x, int y){
 
 }
 
+
+/**
+* Manages the positioning of elements in a space-limited environment.
+* If the horizontal count exceeds the limit, the function resets it to 0 and increases
+* the vertical count by 1 while resetting the horizontal position to the starting value.
+*/
 void spaceManager(){
     if(hCount > 29){
         hCount = 0;
@@ -58,6 +84,12 @@ void spaceManager(){
     }
 }
 
+
+/**
+* @Brief Renders an image based on the input character and displays it on the given renderer.
+* @param inputChar the input character containing comma-separated integer values
+* @param renderer the renderer on which to display the images
+*/
 void renderChar(char* inputChar, SDL_Renderer *renderer) {
     char* token;
     int i = 0;
@@ -137,6 +169,11 @@ void renderChar(char* inputChar, SDL_Renderer *renderer) {
     }
 }
 
+
+/**
+* @brief Resets the position and count for rendering.
+* @return void
+*/
 void setRenderAgain(){
     currentx = 5;
     currenty = 5;

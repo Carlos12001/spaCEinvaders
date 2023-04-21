@@ -31,16 +31,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
     boolean isObserver = false;
     char previous[MAX_MSG_LEN];
 
-    // /**
+    //char buffer[MAX_MSG_LEN];
 
-//    char buffer[MAX_MSG_LEN];
-
-    // Connect to server
+    /**
+     * @brief Starts the socket, and starts listening.
+     */
     init_socket("127.0.0.1", 25565);
     printf("Connected to server\n");
-
-
-    // Start listening for incoming messages
     start_listening();
 
     // Send messages to server
@@ -56,8 +53,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
         }
     }
     // */
-    // /**
     //SDL_Init(SDL_INIT_EVERYTHING);
+
+
+    /**
+     *@brief Defines SDL window elements.
+     */
     SDL_Init(SDL_INIT_VIDEO);
     SDL_Window * win = SDL_CreateWindow("SpaceInviders", SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,1200,675, SDL_WINDOW_OPENGL);
     SDL_Renderer *renderer = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
@@ -69,7 +70,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
     //strcpy(buffer, "j");
     //send_message(sock_fd, buffer);
 
-
+    /*
+     * Loop that draws frames every iteration.
+     */
     int abc= 0;
     while(run){
         SDL_Event ev;
@@ -81,7 +84,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
                     run = false;
                     break;
                 case SDL_KEYUP:
+                    /*
+                     * Commands to set player(j) or spectator(e)
+                     */
                     if(!isStart) {
+
                         if (SDLK_j == ev.key.keysym.sym) {
                             send_message("j\n");
                             isStart = true;
@@ -92,6 +99,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
                             isObserver = true;
                         }
                     }
+                    /*
+                     * Commands for movements and actions in-game
+                     */
                     if (!isObserver) {
                         if (SDLK_SPACE == ev.key.keysym.sym) {
                             send_message("s\n");
@@ -127,12 +137,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
         SDL_RenderPresent(renderer);
     }
 
-
+    /*
+     * Closes every window element.
+     */
     IMG_Quit();
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(win);
     SDL_Quit();
-
-    // */
     return EXIT_SUCCESS;
 }

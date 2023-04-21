@@ -15,7 +15,13 @@
 int sock_fd;
 char received_message[MAX_MSG_LEN];
 
-// Helper function to create a socket and connect to the server
+/**
+ * Creates the socket connection using the ip and port provided.
+ * @param char server_ip
+ * @param int port
+ * @return int socket
+ */
+
 int create_socket(const char *server_ip, int port) {
     //int sock_fd;
     struct sockaddr_in server_addr;
@@ -52,11 +58,18 @@ int create_socket(const char *server_ip, int port) {
     return sock_fd;
 }
 
+/**
+ * Returns the socket variable.
+ * @return int socket
+ */
 int getSocket(){
     return sock_fd;
 }
 
-// Thread function to listen for incoming messages
+/**
+ * Thread function to listen for incoming messages
+ * @param arg (not used)
+ */
 void *listen_thread(void *arg) {
     //int sock_fd = *(int *)arg;
     char buffer[MAX_MSG_LEN];
@@ -85,12 +98,21 @@ void *listen_thread(void *arg) {
     pthread_exit(NULL);
 }
 
-// Initializes the socket and connects to the server
+
+/**
+ * Initializes the socket and connects to the server
+ * @param char ip, int port
+ * @return int socket
+ */
 int init_socket(const char *server_ip, int port) {
     return create_socket(server_ip, port);
 }
 
-// Sends a message through the socket
+/**
+* Sends a message over the socket connection.
+* @param message The message to send.
+* @return 0 success, -1 failure.
+*/
 int send_message(const char *message) {
     int bytes_sent;
     //printf("%s", message);
@@ -106,6 +128,10 @@ int send_message(const char *message) {
 }
 
 // Starts a thread to listen for incoming messages
+/**
+* Starts a new thread to handle incoming connections on the specified socket file descriptor.
+* @param sock_fd The socket file descriptor to listen on.
+*/
 void start_listening() {
     pthread_t thread_id;
 
@@ -114,10 +140,10 @@ void start_listening() {
         exit(EXIT_FAILURE);
     }
 }
-
-
-// csocket.c
-
+/**
+* Returns the most recently received message.
+* @return A pointer to the most recently received message.
+*/
 char* get_received_message() {
     return received_message;
 }
