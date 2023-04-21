@@ -16,4 +16,9 @@ void start_listening();
 
 int getSocket();
 
+// csocket.h
+
+char* get_received_message();
+
+
 #endif

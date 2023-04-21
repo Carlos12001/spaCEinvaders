@@ -30,12 +30,12 @@ public class Game {
     /*
      * This is the speed of the aliens
      */
-    private Integer alienSpeed = 500;
+    private Integer alienSpeed = 200;
 
     /*
      * This is the period of the aliens shoot
      */
-    private Integer alienPeriodShoot = 400;
+    private Integer alienPeriodShoot = 2000;
 
     /*
      * This is the speed of the shoot

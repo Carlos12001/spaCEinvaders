@@ -14,8 +14,6 @@ public class Main {
      */
     public static void main(String[] args) {
         System.out.println("Hello and welcome to the Server!");
-        Connection.start();
-        Game.start();
 
 
         Server server = new Server();
@@ -37,22 +35,21 @@ public class Main {
                 break;
             }
 
-            System.out.println("Lo que escribiste fue: " + input);
             server.updateState(0, input);
         }
 
         scanner.close();
 
-        Game game = new Game();
-        game.startGameLoop();
-
-        //----------
-        Scanner scanner = new Scanner(System.in);
-        String input = "";
-        while (!game.gameOver.get()) {
-            input = scanner.nextLine();
-            game.setAction(input);
-            System.out.println(game.getStatus()); // aqui manda al cliente cierto 25ms
-        }
+//        Game game = new Game();
+//        game.startGameLoop();
+//
+//        //----------
+//        Scanner scanner = new Scanner(System.in);
+//        String input = "";
+//        while (!game.gameOver.get()) {
+//            input = scanner.nextLine();
+//            game.setAction(input);
+//            System.out.println(game.getStatus()); // aqui manda al cliente cierto 25ms
+//        }
     }
 }

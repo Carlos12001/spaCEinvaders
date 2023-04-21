@@ -1,24 +1,45 @@
 package connections;
 
+import game.Game;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class Subject {
     private List<Observer> observers = new ArrayList<>();
     private String state;
     private Integer id;
+    private final Game game;
+    private final ScheduledExecutorService executor;
 
     public Subject(Integer id){
         this.id = id;
+        this.game = new Game();
+        this.game.startGameLoop();
+        executor = Executors.newSingleThreadScheduledExecutor();
+//        loop();
     }
 
+    public void loop(){
+        executor.scheduleAtFixedRate(() -> {
+            getState();
+            notifyAllObservers();
+        }, 0, 25, TimeUnit.MILLISECONDS);
+    }
+
+
     public void setState(String state){
-        this.state = state;
+        this.game.setAction(state);
+        //aqui se hace manualmente el update
+        getState();
         notifyAllObservers();
     }
 
     public String getState(){
-        return state;
+        return this.game.getStatus();
     }
 
     public Integer getId(){

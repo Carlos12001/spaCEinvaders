@@ -13,6 +13,8 @@
 
 #define MAX_MSG_LEN 1024
 int sock_fd;
+char received_message[MAX_MSG_LEN];
+
 // Helper function to create a socket and connect to the server
 int create_socket(const char *server_ip, int port) {
     //int sock_fd;
@@ -75,6 +77,7 @@ void *listen_thread(void *arg) {
             printf("Reconnected to server.\n");
             continue;
         }
+        strncpy(received_message, buffer, MAX_MSG_LEN);
         printf("Received message: %s\n", buffer);
     }
 
@@ -110,4 +113,11 @@ void start_listening() {
         printf("Failed to create listening thread\n");
         exit(EXIT_FAILURE);
     }
+}
+
+
+// csocket.c
+
+char* get_received_message() {
+    return received_message;
 }

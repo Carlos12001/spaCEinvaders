@@ -77,7 +77,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
             }
         }
-        renderChar(inputChar, renderer);
+        renderChar(get_received_message(), renderer);
     }
 
 

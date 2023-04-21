@@ -94,6 +94,22 @@ void renderChar(char* inputChar, SDL_Renderer *renderer) {
                 //printf("al ");
                 showPicture(value, renderer, currentx, currenty);
             }
+            else if (value == 14) {
+                //printf("for ");
+                showPicture(value, renderer, currentx, currenty);
+            }
+            else if (value == 17) {
+                //printf("for ");
+                showPicture(value, renderer, currentx, currenty);
+            }
+            else if (value == 18) {
+                //printf("for ");
+                showPicture(value, renderer, currentx, currenty);
+            }
+            else if (value == 19) {
+                //printf("for ");
+                showPicture(value, renderer, currentx, currenty);
+            }
             else if (value == 20) {
                 //printf("for ");
                 showPicture(value, renderer, currentx, currenty);
