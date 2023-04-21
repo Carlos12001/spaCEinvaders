@@ -182,11 +182,13 @@ public class Server {
                             stopHandler();
                         }
                     }
+                    else {
+                        updateState(sid, inputLine);
+                    }
                     System.out.println("Received message from client " + clientSocket + ": " + inputLine);
-                    //out.println("Echo: " + inputLine);
-                    //broadcast("Client " + clientSocket + " says: " + inputLine);
-                    //broadcast("Got yah >:D");
-                    //out.println("Got yah >:)");
+
+
+
                 }
             } catch (IOException e) {
                 System.err.println("Error handling client " + clientSocket + ": " + e.getMessage());

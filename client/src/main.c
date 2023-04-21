@@ -13,7 +13,14 @@
 #define MAX_MSG_LEN 4096
 
 //int sock_fd;
-
+/**
+ * Main function
+ * @param hInstance the instance of the program
+ * @param hPrevInstance the previous instance of the program
+ * @param lpCmdLine the command line
+ * @param nCmdShow the command show
+ * @return the exit code
+ */
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
                    LPSTR lpCmdLine, int nCmdShow){
 
@@ -74,9 +81,39 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
                     run = false;
                     break;
                 case SDL_KEYUP:
-                    if(SDLK_j == ev.key.keysym.sym)
-                    {
-                        send_message( "j\n");
+                    if(!isStart) {
+                        if (SDLK_j == ev.key.keysym.sym) {
+                            send_message("j\n");
+                            isStart = true;
+                        }
+                        if (SDLK_e == ev.key.keysym.sym) {
+                            send_message("e\n");
+                            isStart = true;
+                            isObserver = true;
+                        }
+                    }
+                    if (!isObserver) {
+                        if (SDLK_SPACE == ev.key.keysym.sym) {
+                            send_message("s\n");
+                        }
+                        if (SDLK_RIGHT == ev.key.keysym.sym) {
+                            send_message("r\n");
+                        }
+                        if (SDLK_LEFT == ev.key.keysym.sym) {
+                            send_message("l\n");
+                        }
+                        if (SDLK_k == ev.key.keysym.sym) {
+                            send_message("killall\n");
+                        }
+                        if (SDLK_u == ev.key.keysym.sym) {
+                            send_message("u0\n");
+                        }
+                        if (SDLK_ESCAPE == ev.key.keysym.sym) {
+                            send_message("killgame\n");
+                        }
+                        if (SDLK_i == ev.key.keysym.sym) {
+                            send_message("u1\n");
+                        }
                     }
 
             }
